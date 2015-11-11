@@ -1,6 +1,5 @@
 var gulp = require('gulp'),
 	autoprefixer = require('gulp-autoprefixer'),
-	concat = require('gulp-concat'),
 	del = require('del'),
 	inject = require('gulp-inject'),
 	livereload = require('gulp-livereload'),
@@ -27,7 +26,6 @@ var scssLoadPaths = [
 // Scripts
 gulp.task('js', function () {
 	return gulp.src(paths.js + '**/*.js')
-		.pipe(concat('cocoen.js'))
 		.pipe(rename({ suffix: '.min' }))
 		.pipe(uglify())
 		.pipe(gulp.dest(paths.dest + 'js'));
@@ -35,14 +33,13 @@ gulp.task('js', function () {
 
 // Styles
 gulp.task('css', function() {
-	return gulp.src(paths.scss + 'main.scss')
+	return gulp.src(paths.scss + '**/*.scss')
 		.pipe(sass({
 			outputStyle: 'compressed',
 			includePaths: scssLoadPaths
 		}))
 		.on('error', sass.logError)
 		.pipe(autoprefixer('last 2 versions', 'ie 9', 'ios 6', 'android 4'))
-		.pipe(concat('cocoen.css'))
 		.pipe(rename({ suffix: '.min' }))
 		.pipe(gulp.dest(paths.dest + 'css'));
 });
