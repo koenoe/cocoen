@@ -1,0 +1,45 @@
+# Ignore OS generated files
+ehthumbs.db
+Thumbs.db
+
+# Ignore Editor files
+*.sublime-project
+*.sublime-workspace
+
+# osx specific files
+*~
+*.lock
+*.DS_Store
+*.swp
+*.out
+._*
+*.swp
+*.swo
+*.swn
+
+# Ignore log files
+*.log
+
+# Ignore compiled files
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Ignore packaged files
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Ignore node/grunt dependency directories
+node_modules
+.tmp
+.sass-cache
+bower_components
