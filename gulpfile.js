@@ -17,7 +17,7 @@ var paths = {
 
 var injectParams = {
 	file: 'demo.html',
-	options: {relative: false, read: false}
+	options: {relative: true, read: false}
 };
 
 var scssLoadPaths = [
@@ -50,6 +50,15 @@ gulp.task('css', function() {
 // Clean
 gulp.task('clean', function(cb) {
 	del([paths.dest + '**/*.js', paths.dest + '**/*.css'], cb);
+});
+
+// Inject
+gulp.task('inject', ['css','js'], function () {
+	var target = gulp.src(paths.dest + injectParams.file),
+		sources = gulp.src([paths.dest + '**/*.css', paths.dest + '**/*.js'], {read: false});
+
+	return target.pipe(inject(sources, injectParams.options))
+		.pipe(gulp.dest(paths.dest));
 });
 
 gulp.task('watch', function() {
