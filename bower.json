@@ -6,9 +6,7 @@
   ],
   "description": "Much like the caterpillar, your image will undergo a clear transformation with Cocoen. Making comparison really easy, it’s as straightforward way of seeing your images in a new light.",
   "version": "1.0.0",
-  "main": [
-
-  ],
+  "main": [],
   "moduleType": [
     "globals"
   ],
@@ -27,5 +25,8 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4"
+  }
 }

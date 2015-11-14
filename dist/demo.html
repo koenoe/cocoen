@@ -13,10 +13,28 @@
 		<!-- endinject -->
 	</head>
 	<body>
-		<p>Demo here</p>
+
+		<div class="container">
+
+			<h1>Cocoen Demo</h1>
+
+			<figure class="cocoen">
+				<div class="cocoen__before">
+					<img src="img/before.jpg" alt="">
+				</div>
+				<img src="img/after.jpg" alt="">
+			</figure>
+
+		</div>
 
 		<!-- inject:js -->
+		<script src="js/vendor/jquery.min.js"></script>
 		<script src="js/cocoen.min.js"></script>
 		<!-- endinject -->
+		<script>
+			$(function(){
+				$('.cocoen').cocoen();
+			});
+		</script>
 	</body>
 </html>

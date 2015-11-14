@@ -1,16 +1,21 @@
 var gulp = require('gulp'),
 	autoprefixer = require('gulp-autoprefixer'),
+	bower = require('main-bower-files'),
 	del = require('del'),
+	imagemin = require('gulp-imagemin'),
 	inject = require('gulp-inject'),
+	jshint = require('gulp-jshint'),
 	livereload = require('gulp-livereload'),
 	rename = require('gulp-rename'),
 	sass = require('gulp-sass'),
+	series = require('stream-series'),
 	uglify = require('gulp-uglify'),
 	watch = require('gulp-watch');
 
 var paths = {
 	js: './src/js/',
 	scss: './src/scss/',
+	img: './src/img/',
 	dest: './dist/'
 };
 
@@ -24,11 +29,22 @@ var scssLoadPaths = [
 ];
 
 // Scripts
-gulp.task('js', function () {
+gulp.task('bower-js', function(){
+	return gulp.src(bower('**/*.js'))
+		.pipe(rename({ suffix: '.min' }))
+		.pipe(uglify())
+		.pipe(gulp.dest(paths.dest + 'js/vendor'));
+});
+gulp.task('js', ['bower-js'], function () {
 	return gulp.src(paths.js + '**/*.js')
 		.pipe(rename({ suffix: '.min' }))
 		.pipe(uglify())
 		.pipe(gulp.dest(paths.dest + 'js'));
+});
+gulp.task('js-hint', function() {
+	return gulp.src(paths.js + '**/*.js')
+		.pipe(jshint())
+		.pipe(jshint.reporter('jshint-stylish'));
 });
 
 // Styles
@@ -44,6 +60,13 @@ gulp.task('css', function() {
 		.pipe(gulp.dest(paths.dest + 'css'));
 });
 
+// Images
+gulp.task('img', function() {
+	return gulp.src(paths.img + '**/*', { base: paths.img })
+		.pipe(imagemin({ optimizationLevel: 7, progressive: true, interlaced: true }))
+		.pipe(gulp.dest(paths.dest + 'img'));
+});
+
 // Clean
 gulp.task('clean', function(cb) {
 	del([paths.dest + '**/*.js', paths.dest + '**/*.css'], cb);
@@ -51,10 +74,11 @@ gulp.task('clean', function(cb) {
 
 // Inject
 gulp.task('inject', ['css','js'], function () {
-	var target = gulp.src(paths.dest + injectParams.file),
-		sources = gulp.src([paths.dest + '**/*.css', paths.dest + '**/*.js'], {read: false});
+	var vendorStream = gulp.src([paths.dest + 'js/vendor/*.js'], {read: false}),
+		appStream = gulp.src([paths.dest + 'css/*.css', paths.dest + 'js/*.js'], {read: false});
 
-	return target.pipe(inject(sources, injectParams.options))
+	return gulp.src(paths.dest + injectParams.file)
+		.pipe(inject(series(vendorStream, appStream), injectParams.options))
 		.pipe(gulp.dest(paths.dest));
 });
 
@@ -70,4 +94,4 @@ gulp.task('watch', function() {
 	});
 });
 
-gulp.task('default', ['clean','inject','watch']);
+gulp.task('default', ['img','clean','inject','watch']);
