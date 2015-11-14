@@ -7,12 +7,11 @@ Put the required stylesheet at the [top](https://developer.yahoo.com/performance
 ```html
 <link rel="stylesheet" href="css/cocoen.min.css" />
 ```
-**NOTE:** If you want to use the default navigation styles, you will also need to include `owl.theme.default.css`.
 
-
-Put the script at the [bottom](https://developer.yahoo.com/performance/rules.html#js_bottom) of your markup:
+Put the script at the [bottom](https://developer.yahoo.com/performance/rules.html#js_bottom) of your markup right after jQuery:
 
 ```html
+<script src="js/vendor/jquery.min.js"></script>
 <script src="js/cocoen.min.js"></script>
 ```
 
@@ -24,7 +23,7 @@ Wrap your items (`div`, `a`, `img`, `span`, `li` etc.) with a container element 
 
 ```javascript
 $(document).ready(function(){
-  // Coming soon
+  $('.cocoen').cocoen();
 });
 ```
 
