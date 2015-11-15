@@ -25,13 +25,6 @@
 				return '.' + val;
 			}).join('');
 
-			this.dragWidth = this.$dragElement.outerWidth();
-			this.containerWidth = this.$element.outerWidth();
-			this.containerOffset = this.$element.offset().left;
-			this.minLeftPos = this.containerOffset + 10;
-			this.maxLeftPos = this.containerOffset + this.containerWidth - this.dragWidth - 10;
-			this.dragging = false;
-
 			this.setDimensions();
 			this.addEventListeners();
 		},
@@ -48,17 +41,17 @@
 			var startX = (e.pageX) ? e.pageX : e.originalEvent.touches[0].pageX;
 
 			this.posX = this.$dragElement.offset().left + this.dragWidth - startX;
-			this.dragging = true;
+			this.isDragging = true;
 		},
 		onDragEnd: function(e){
 			e.preventDefault();
 
-			this.dragging = false;
+			this.isDragging = false;
 		},
 		onDrag: function(e){
 			e.preventDefault();
 
-			if(!this.dragging){
+			if(!this.isDragging){
 				return;
 			}
 
@@ -82,6 +75,13 @@
 		},
 		setDimensions: function(){
 			this.$beforeImg.css('width', this.$element.width());
+
+			this.dragWidth = this.$dragElement.outerWidth();
+			this.containerWidth = this.$element.outerWidth();
+			this.containerOffset = this.$element.offset().left;
+			this.minLeftPos = this.containerOffset + 10;
+			this.maxLeftPos = this.containerOffset + this.containerWidth - this.dragWidth - 10;
+			this.isDragging = false;
 		}
 
 	};
