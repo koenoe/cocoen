@@ -41,7 +41,7 @@ gulp.task('js', ['bower-js'], function () {
 		.pipe(uglify())
 		.pipe(gulp.dest(paths.dest + 'js'));
 });
-gulp.task('js-hint', function() {
+gulp.task('jshint', function() {
 	return gulp.src(paths.js + '**/*.js')
 		.pipe(jshint())
 		.pipe(jshint.reporter('jshint-stylish'));

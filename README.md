@@ -1,5 +1,7 @@
 ## Cocoen Beta
 
+Touch-enabled before/after slider with requestAnimationFrame. Inspired by [before-after.js](https://github.com/jotform/before-after.js).
+
 ### Quick start
 
 Put the required stylesheet at the [top](https://developer.yahoo.com/performance/rules.html#css_top) of your markup:
@@ -15,15 +17,21 @@ Put the script at the [bottom](https://developer.yahoo.com/performance/rules.htm
 <script src="js/cocoen.min.js"></script>
 ```
 
-Wrap your items (`div`, `a`, `img`, `span`, `li` etc.) with a container element (`div`, `ul` etc.). Only the class `cocoen` is mandatory to apply proper styles:
+Only the class `cocoen` and `cocoen__drag` are mandatory to apply proper default styles:
 
 ```html
-  <div></div>
+	<figure class="cocoen">
+		<div>
+			<img src="img/before.jpg" alt="">
+		</div>
+		<img src="img/after.jpg" alt="">
+		<span class="cocoen__drag"></span>
+	</figure>
 ```
 
 ```javascript
 $(document).ready(function(){
-  $('.cocoen').cocoen();
+	$('.cocoen').cocoen();
 });
 ```
 
@@ -31,7 +39,9 @@ $(document).ready(function(){
 
 This package comes with [Gulp](http://gulpjs.com/) and [Bower](http://bower.io/). The following tasks are available:
 
-  * -
+  * `default` compiles the CSS and JS into `/dist`
+  * `jshint` validates the JS
+  * `watch` watches source files and builds them automatically whenever you save.
 
 ### License
 
