@@ -36,10 +36,10 @@
 			this.addEventListeners();
 		},
 		addEventListeners: function(){
-			$('body').on('mousedown touchstart', this.options.dragElementSelector, this.onDragStart.bind(this));
-			$('body').on('mouseup touchend touchcancel', this.onDragEnd.bind(this));
-			$('body').on('mousemove touchmove', this.elementSelector, this.onDrag.bind(this));
+			this.$element.on('mousedown touchstart', this.options.dragElementSelector, this.onDragStart.bind(this));
+			this.$element.on('mousemove touchmove', this.onDrag.bind(this));
 
+			$(window).on('mouseup touchend touchcancel', this.onDragEnd.bind(this));
 			$(window).on('resize', this.setDimensions.bind(this));
 		},
 		onDragStart: function(e){
