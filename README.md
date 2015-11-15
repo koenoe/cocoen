@@ -20,13 +20,13 @@ Put the script at the [bottom](https://developer.yahoo.com/performance/rules.htm
 Only the class `cocoen` and `cocoen__drag` are mandatory to apply proper default styles:
 
 ```html
-	<figure class="cocoen">
-		<div>
-			<img src="img/before.jpg" alt="">
-		</div>
-		<img src="img/after.jpg" alt="">
-		<span class="cocoen__drag"></span>
-	</figure>
+<figure class="cocoen">
+	<div>
+		<img src="img/before.jpg" alt="">
+	</div>
+	<img src="img/after.jpg" alt="">
+	<span class="cocoen__drag"></span>
+</figure>
 ```
 
 ```javascript
