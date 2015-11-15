@@ -1,5 +1,15 @@
 ;(function ( $, window, document, undefined ) {
 
+	// shim layer with setTimeout fallback
+	window.requestAnimFrame = (function(){
+	  return  window.requestAnimationFrame       ||
+			  window.webkitRequestAnimationFrame ||
+			  window.mozRequestAnimationFrame    ||
+			  function( callback ){
+				window.setTimeout(callback, 1000 / 60);
+			  };
+	})();
+
 	'use strict';
 
 	var pluginName = 'cocoen',
@@ -54,16 +64,20 @@
 
 			if(!this.dragging) return;
 
-			var moveX = (e.pageX) ? e.pageX : e.originalEvent.touches[0].pageX;
-			var leftPos = moveX + this.posX - this.dragWidth;
+			this.moveX = (e.pageX) ? e.pageX : e.originalEvent.touches[0].pageX;
 
-			if(leftPos < this.minLeftPos) {
-				leftPos = this.minLeftPos;
-			} else if(leftPos > this.maxLeftPos) {
-				leftPos = this.maxLeftPos;
+			requestAnimationFrame(this.drag.bind(this));
+		},
+		drag: function(){
+			this.leftPos = this.moveX + this.posX - this.dragWidth;
+
+			if(this.leftPos < this.minLeftPos) {
+				this.leftPos = this.minLeftPos;
+			} else if(this.leftPos > this.maxLeftPos) {
+				this.leftPos = this.maxLeftPos;
 			}
 
-			var width = (leftPos + (this.dragWidth / 2) - this.containerOffset) * 100 / this.containerWidth + '%';
+			var width = (this.leftPos + (this.dragWidth / 2) - this.containerOffset) * 100 / this.containerWidth + '%';
 
 			this.$dragElement.css('left', width);
 			this.$before.css('width', width);
