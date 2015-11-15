@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
+		<title>Cocoen Demo</title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<!-- inject:css -->
+		<link rel="stylesheet" href="css/cocoen.min.css">
+		<link rel="stylesheet" href="css/demo.min.css">
+		<!-- endinject -->
+	</head>
+	<body>
+
+		<div class="container">
+
+			<h1>Cocoen Demo</h1>
+
+			<figure class="cocoen">
+				<div>
+					<img src="img/before.jpg" alt="">
+				</div>
+				<img src="img/after.jpg" alt="">
+				<span class="cocoen__drag"></span>
+			</figure>
+
+		</div>
+
+		<!-- inject:js -->
+		<script src="js/vendor/jquery.min.js"></script>
+		<script src="js/cocoen.min.js"></script>
+		<!-- endinject -->
+		<script>
+			$(function(){
+				$('.cocoen').cocoen();
+			});
+		</script>
+	</body>
+</html>
