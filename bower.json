@@ -6,7 +6,10 @@
   ],
   "description": "Much like the caterpillar, your image will undergo a clear transformation with Cocoen. Making comparison really easy, it’s as straightforward way of seeing your images in a new light.",
   "version": "1.0.0",
-  "main": [],
+  "main": [
+    "dist/css/cocoen.min.css",
+    "dist/js/cocoen.min.js"
+  ],
   "moduleType": [
     "globals"
   ],

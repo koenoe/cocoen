@@ -2,6 +2,11 @@
 
 Touch-enabled before/after slider with requestAnimationFrame. Inspired by [before-after.js](https://github.com/jotform/before-after.js).
 
+### Bower
+```
+bower install cocoen
+```
+
 ### Quick start
 
 Put the required stylesheet at the [top](https://developer.yahoo.com/performance/rules.html#css_top) of your markup:
