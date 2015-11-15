@@ -1,4 +1,4 @@
-## Cocoen Beta
+## Cocoen
 
 Touch-enabled before/after slider with requestAnimationFrame. Inspired by [before-after.js](https://github.com/jotform/before-after.js).
 
