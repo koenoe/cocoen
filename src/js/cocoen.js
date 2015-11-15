@@ -10,6 +10,7 @@
 	function Plugin( element, options ) {
 		this.options = $.extend( {}, defaults, options);
 		this.$element = $(element);
+
 		this.init();
 	}
 
@@ -19,6 +20,10 @@
 			this.$before = this.$element.find('div:first-child');
 			this.$beforeImg = this.$before.find('img');
 			this.$dragElement = this.$element.find(this.options.dragElementSelector);
+
+			this.elementSelector = $.map(this.$element.attr('class').split(' '), function(val) {
+				return '.' + val;
+			}).join('');
 
 			this.dragWidth = this.$dragElement.outerWidth();
 			this.containerWidth = this.$element.outerWidth();
@@ -31,9 +36,10 @@
 			this.addEventListeners();
 		},
 		addEventListeners: function(){
-			this.$element.on('mousedown touchstart', this.options.dragElementSelector, this.onDragStart.bind(this));
-			this.$element.on('mouseup touchend touchcancel', this.options.dragElementSelector, this.onDragEnd.bind(this));
-			this.$element.on('mousemove touchmove', this.onDrag.bind(this));
+			$('body').on('mousedown touchstart', this.options.dragElementSelector, this.onDragStart.bind(this));
+			$('body').on('mouseup touchend touchcancel', this.onDragEnd.bind(this));
+			$('body').on('mousemove touchmove', this.elementSelector, this.onDrag.bind(this));
+
 			$(window).on('resize', this.setDimensions.bind(this));
 		},
 		onDragStart: function(e){
@@ -52,7 +58,9 @@
 		onDrag: function(e){
 			e.preventDefault();
 
-			if(!this.dragging) return;
+			if(!this.dragging){
+				return;
+			}
 
 			this.moveX = (e.pageX) ? e.pageX : e.originalEvent.touches[0].pageX;
 
