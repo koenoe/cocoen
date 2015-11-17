@@ -2,6 +2,7 @@ var gulp = require('gulp'),
 	autoprefixer = require('gulp-autoprefixer'),
 	bower = require('main-bower-files'),
 	del = require('del'),
+	ghPages = require('gulp-gh-pages'),
 	imagemin = require('gulp-imagemin'),
 	inject = require('gulp-inject'),
 	jshint = require('gulp-jshint'),
@@ -20,7 +21,7 @@ var paths = {
 };
 
 var injectParams = {
-	file: 'demo.html',
+	file: 'index.html',
 	options: {relative: true, read: false}
 };
 
@@ -80,6 +81,12 @@ gulp.task('inject', ['css','js'], function () {
 	return gulp.src(paths.dest + injectParams.file)
 		.pipe(inject(series(vendorStream, appStream), injectParams.options))
 		.pipe(gulp.dest(paths.dest));
+});
+
+// Deploy
+gulp.task('deploy', function() {
+	return gulp.src(paths.dest + '**/*')
+		.pipe(ghPages());
 });
 
 gulp.task('watch', function() {
