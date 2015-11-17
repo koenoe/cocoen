@@ -4,6 +4,9 @@ Touch-enabled before/after slider with requestAnimationFrame. Inspired by [befor
 
 ![](https://github.com/koenoe/cocoen/blob/master/readme.gif)
 
+### Demo
+[https://koenoe.github.io/cocoen](https://koenoe.github.io/cocoen)
+
 ### Bower
 ```
 bower install cocoen
