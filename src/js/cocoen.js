@@ -30,7 +30,8 @@
 			this.$beforeImg = this.$before.find('img');
 		},
 		addEventListeners: function(){
-			this.$element.on('mousedown touchstart', this.options.dragElementSelector, this.onDragStart.bind(this));
+			this.$element.on('mousedown', this.options.dragElementSelector, this.onDragStart.bind(this));
+			this.$element.on('touchstart', this.onDragStart.bind(this))
 			this.$element.on('mousemove touchmove', this.onDrag.bind(this));
 
 			$(window).on('mouseup touchend touchcancel', this.onDragEnd.bind(this));
