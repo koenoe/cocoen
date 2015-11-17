@@ -2,6 +2,8 @@
 
 Touch-enabled before/after slider with requestAnimationFrame. Inspired by [before-after.js](https://github.com/jotform/before-after.js).
 
+![](https://github.com/koenoe/cocoen/blob/master/readme.gif)
+
 ### Bower
 ```
 bower install cocoen
