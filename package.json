@@ -1,6 +1,6 @@
 {
   "name": "cocoen",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Much like the caterpillar, your image will undergo a clear transformation with Cocoen. Making comparison really easy, it’s as straightforward way of seeing your images in a new light.",
   "main": "gulpfile.js",
   "scripts": {
@@ -20,6 +20,7 @@
     "del": "^2.0.2",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^3.1.0",
+    "gulp-gh-pages": "^0.5.4",
     "gulp-imagemin": "^2.4.0",
     "gulp-inject": "^3.0.0",
     "gulp-jshint": "^1.12.0",
