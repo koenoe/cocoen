@@ -17,16 +17,17 @@
 	Plugin.prototype = {
 
 		init: function() {
-			this.$before = this.$element.find('div:first-child');
-			this.$beforeImg = this.$before.find('img');
-			this.$dragElement = this.$element.find(this.options.dragElementSelector);
-
-			this.elementSelector = $.map(this.$element.attr('class').split(' '), function(val) {
-				return '.' + val;
-			}).join('');
-
+			this.createElements();
 			this.setDimensions();
 			this.addEventListeners();
+		},
+		createElements: function(){
+			this.$element.append('<span class="'+ this.options.dragElementSelector.replace('.','') +'"></span>');
+			this.$element.find('img:first-child').wrap('<div></div>');
+
+			this.$dragElement = this.$element.find(this.options.dragElementSelector);
+			this.$before = this.$element.find('div:first-child');
+			this.$beforeImg = this.$before.find('img');
 		},
 		addEventListeners: function(){
 			this.$element.on('mousedown touchstart', this.options.dragElementSelector, this.onDragStart.bind(this));
