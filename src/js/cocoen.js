@@ -30,12 +30,19 @@
 			this.$beforeImg = this.$before.find('img');
 		},
 		addEventListeners: function(){
-			this.$element.on('mousedown', this.options.dragElementSelector, this.onDragStart.bind(this));
-			this.$element.on('touchstart', this.onDragStart.bind(this))
-			this.$element.on('mousemove touchmove', this.onDrag.bind(this));
+			this.$element.on('tapstart', this.options.dragElementSelector, this.onDragStart.bind(this));
+			this.$element.on('touchstart', this.onDragStart.bind(this));
+			this.$element.on('tapmove', this.onDrag.bind(this));
 
-			$(window).on('mouseup touchend touchcancel', this.onDragEnd.bind(this));
+			this.$element.on('tap', this.onTap.bind(this));
+
+			$(window).on('tapend', this.onDragEnd.bind(this));
 			$(window).on('resize', this.setDimensions.bind(this));
+		},
+		onTap: function(e, touch){
+			this.leftPos = touch[0].position.x;
+
+			this.requestDrag();
 		},
 		onDragStart: function(e){
 			e.preventDefault();
@@ -58,11 +65,14 @@
 			}
 
 			this.moveX = (e.pageX) ? e.pageX : e.originalEvent.touches[0].pageX;
+			this.leftPos = this.moveX + this.posX - this.dragWidth;
 
+			this.requestDrag();
+		},
+		requestDrag: function(){
 			requestAnimationFrame(this.drag.bind(this));
 		},
 		drag: function(){
-			this.leftPos = this.moveX + this.posX - this.dragWidth;
 
 			if(this.leftPos < this.minLeftPos) {
 				this.leftPos = this.minLeftPos;
