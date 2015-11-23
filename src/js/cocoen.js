@@ -30,23 +30,17 @@
 			this.$beforeImg = this.$before.find('img');
 		},
 		addEventListeners: function(){
-			this.$element.on('tapstart', this.options.dragElementSelector, this.onDragStart.bind(this));
-			this.$element.on('touchstart', this.onDragStart.bind(this));
-			this.$element.on('tapmove', this.onDrag.bind(this));
+			this.$element.on('click', this.onTap.bind(this));
+			this.$element.on('mousedown touchstart', this.options.dragElementSelector, this.onDragStart.bind(this));
+			this.$element.on('mousemove touchmove', this.onDrag.bind(this));
 
-			this.$element.on('tap', this.onTap.bind(this));
-
-			$(window).on('tapend', this.onDragEnd.bind(this));
+			$(window).on('mouseup', this.onDragEnd.bind(this));
 			$(window).on('resize', this.setDimensions.bind(this));
 		},
-		onTap: function(e, touch){
+		onTap: function(e){
+			e.preventDefault();
 
-			if(e.pageX){
-				this.leftPos = e.pageX;
-			} else {
-				this.leftPos = touch[0].position.x;
-			}
-
+			this.leftPos = (e.pageX) ? e.pageX : e.originalEvent.touches[0].pageX;
 			this.requestDrag();
 		},
 		onDragStart: function(e){
