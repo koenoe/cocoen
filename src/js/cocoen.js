@@ -40,7 +40,12 @@
 			$(window).on('resize', this.setDimensions.bind(this));
 		},
 		onTap: function(e, touch){
-			this.leftPos = touch[0].position.x;
+
+			if(e.pageX){
+				this.leftPos = e.pageX;
+			} else {
+				this.leftPos = touch[0].position.x;
+			}
 
 			this.requestDrag();
 		},
