@@ -1,8 +1,8 @@
 {
   "name": "cocoen",
-  "version": "1.2.4",
+  "version": "1.3.0",
   "description": "Much like the caterpillar, your image will undergo a clear transformation with Cocoen. Making comparison really easy, it’s as straightforward way of seeing your images in a new light.",
-  "main": "gulpfile.js",
+  "main": "dist/js/cocoen.min.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,6 +16,10 @@
     "url": "https://github.com/koenoe/cocoen/issues"
   },
   "homepage": "https://github.com/koenoe/cocoen#readme",
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "requestAnimationFrame": "~0.0.23"
+  },
   "devDependencies": {
     "del": "^2.0.2",
     "gulp": "^3.9.0",
