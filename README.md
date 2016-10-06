@@ -7,6 +7,11 @@ Touch-enabled before/after slider with requestAnimationFrame. Inspired by [befor
 ### Demo
 [https://koenoe.github.io/cocoen](https://koenoe.github.io/cocoen)
 
+### NPM
+```
+npm install cocoen
+```
+
 ### Bower
 ```
 bower install cocoen
@@ -32,14 +37,14 @@ Only the class `cocoen` is mandatory to apply proper default styles:
 
 ```html
 <div class="cocoen">
-	<img src="img/before.jpg" alt="">
-	<img src="img/after.jpg" alt="">
+  <img src="img/before.jpg" alt="">
+  <img src="img/after.jpg" alt="">
 </div>
 ```
 
 ```javascript
 $(document).ready(function(){
-	$('.cocoen').cocoen();
+  $('.cocoen').cocoen();
 });
 ```
 
