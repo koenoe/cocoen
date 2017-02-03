@@ -4,7 +4,8 @@
 
 	var pluginName = 'cocoen',
 		defaults = {
-			dragElementSelector: '.cocoen__drag'
+			dragElementSelector: '.cocoen__drag',
+			dragCallback: null
 		};
 
 	function Plugin( element, options ) {
@@ -79,10 +80,15 @@
 				this.leftPos = this.maxLeftPos;
 			}
 
-			var width = (this.leftPos + (this.dragWidth / 2) - this.containerOffset) * 100 / this.containerWidth + '%';
+			var openRatio = (this.leftPos + (this.dragWidth / 2) - this.containerOffset) / this.containerWidth;
+			var width = openRatio * 100 + '%';
 
 			this.$dragElement.css('left', width);
 			this.$before.css('width', width);
+
+            if(this.options.dragCallback) {
+                this.options.dragCallback(openRatio);
+            }
 		},
 		setDimensions: function(){
 			this.$beforeImg.css('width', this.$element.width());
