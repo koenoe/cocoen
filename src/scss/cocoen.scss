@@ -8,22 +8,22 @@
   cursor: pointer;
   box-sizing: border-box;
 
-  & *,
-  & *:before,
-  & *:after {
+  *,
+  *::before,
+  *::after {
     box-sizing: inherit;
   }
 
-  img {
+  img, picture > img {
     max-width: none;
   }
 
-  > img {
+  > img, > picture > img {
     width: 100%;
     display: block;
   }
 
-  > div:first-child {
+  > div:first-child, > picture:first-child > div {
     position: absolute;
     top: 0;
     left: 0;
@@ -42,7 +42,7 @@
     background: #fff;
     margin-left: -1px;
 
-    &:before {
+    &::before {
       content: "";
       position: absolute;
       top: 50%;
