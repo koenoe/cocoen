@@ -1,0 +1,57 @@
+.cocoen {
+  position: relative;
+  overflow: hidden;
+  line-height: 0;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  cursor: pointer;
+  box-sizing: border-box;
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: inherit;
+  }
+
+  img, picture > img {
+    max-width: none;
+  }
+
+  > img, > picture > img {
+    width: 100%;
+    display: block;
+  }
+
+  > div:first-child, > picture:first-child > div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 50%;
+    overflow: hidden;
+  }
+
+  &__drag {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 2px;
+    cursor: ew-resize;
+    background: #fff;
+    margin-left: -1px;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      height: 30px;
+      width: 14px;
+      border: 3px solid #fff;
+      margin-left: -7px;
+      margin-top: -18px;
+    }
+  }
+}
