@@ -8,4 +8,4 @@ class Cocoen {
   }
 }
 
-window.Cocoen = Cocoen;
+module.exports = Cocoen;

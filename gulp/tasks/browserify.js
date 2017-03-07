@@ -14,11 +14,12 @@ import rename from 'gulp-rename';
 import watchify from 'watchify';
 import config from '../config';
 
-function buildScript(file, entries) {
+function buildScript(name, file, entries) {
   let bundler = browserify({
     entries,
     debug: !global.isBuild,
     fullPaths: !global.isBuild,
+    standalone: name,
   });
 
   if (!global.isBuild) {
@@ -56,4 +57,4 @@ function buildScript(file, entries) {
   return rebundle();
 }
 
-gulp.task('browserify', () => buildScript('cocoen.js', [`${config.directories.src}/js/cocoen.js`]));
+gulp.task('browserify', () => buildScript('Cocoen', 'cocoen.js', [`${config.directories.src}/js/cocoen.js`]));
