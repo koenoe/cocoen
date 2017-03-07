@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
+		<title>Cocoen Demo</title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<link rel="stylesheet" href="css/cocoen.min.css">
+    <style>
+      body {
+        background: red;
+      }
+    </style>
+	</head>
+	<body>
+
+		<div class="container">
+			<h1>Cocoen Demo</h1>
+			<div class="cocoen">
+				<img src="img/before.jpg" alt="">
+				<img src="img/after.jpg" alt="">
+			</div>
+		</div>
+
+		<script src="js/cocoen.min.js"></script>
+		<script>
+			document.addEventListener('DOMContentLoaded', () => {
+				new Cocoen();
+			});
+		</script>
+	</body>
+</html>
