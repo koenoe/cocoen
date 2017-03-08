@@ -3,7 +3,9 @@
   "version": "2.0.0",
   "description": "Much like the caterpillar, your image will undergo a clear transformation with Cocoen. Making comparison really easy, it’s as straightforward way of seeing your images in a new light.",
   "main": "dist/js/cocoen.min.js",
-  "scripts": {},
+  "scripts": {
+    "test": "gulp eslint"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/koenoe/cocoen.git"
@@ -40,6 +42,7 @@
     "gulp-streamify": "1.0.2",
     "gulp-uglify": "2.0.1",
     "gulp-util": "3.0.8",
+    "pre-commit": "^1.2.2",
     "run-sequence": "1.2.2",
     "sass-lint": "1.10.2",
     "vinyl-buffer": "1.0.0",
