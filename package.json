@@ -41,6 +41,7 @@
     "gulp-uglify": "2.0.1",
     "gulp-util": "3.0.8",
     "run-sequence": "1.2.2",
+    "sass-lint": "1.10.2",
     "vinyl-buffer": "1.0.0",
     "vinyl-source-stream": "1.1.0",
     "watchify": "3.9.0"
