@@ -50,4 +50,5 @@ Only the class `cocoen` is mandatory to apply proper default styles:
 
 The code and the documentation are released under the [MIT License](LICENSE).
 
+---
 [![NPM](https://nodei.co/npm/cocoen.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/cocoen)
