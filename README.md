@@ -1,6 +1,7 @@
 # Cocoen
 [![Travis-CI](https://travis-ci.org/koenoe/cocoen.svg)](https://travis-ci.org/koenoe/cocoen)
 [![David](https://david-dm.org/koenoe/cocoen.svg)](https://david-dm.org)
+[![npm](https://img.shields.io/npm/dt/express.svg)](https://www.npmjs.com/package/cocoen)
 
 Touch-enabled before/after slider. Inspired by [before-after.js](https://github.com/jotform/before-after.js).
 
@@ -41,7 +42,3 @@ Only the class `cocoen` is mandatory to apply proper default styles:
 ## License
 
 The code and the documentation are released under the [MIT License](LICENSE).
-
----
-
-[![NPM](https://nodei.co/npm/cocoen.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/cocoen)
