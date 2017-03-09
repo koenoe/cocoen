@@ -1,7 +1,7 @@
 # Cocoen
 [![Travis-CI](https://travis-ci.org/koenoe/cocoen.svg)](https://travis-ci.org/koenoe/cocoen)
 [![David](https://david-dm.org/koenoe/cocoen.svg)](https://david-dm.org)
-[![npm](https://img.shields.io/npm/dt/express.svg)](https://www.npmjs.com/package/cocoen)
+[![npm](https://img.shields.io/npm/dt/cocoen.svg)](https://www.npmjs.com/package/cocoen)
 
 Touch-enabled before/after slider. Inspired by [before-after.js](https://github.com/jotform/before-after.js).
 
