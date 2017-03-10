@@ -8,7 +8,7 @@ Touch-enabled before/after slider. Inspired by [before-after.js](https://github.
 ![](readme.gif)
 
 ## Quick start
-[Demo](https://koenromers.com/cocoen/)
+[Demo](https://koenromers.com/cocoen/demo.html)
 
 ### Install
 ```
