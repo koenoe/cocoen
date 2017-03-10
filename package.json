@@ -4,7 +4,8 @@
   "description": "Much like the caterpillar, your image will undergo a clear transformation with Cocoen. Making comparison really easy, it’s as straightforward way of seeing your images in a new light.",
   "main": "dist/js/cocoen.min.js",
   "scripts": {
-    "test": "gulp eslint"
+    "test": "gulp eslint",
+    "start": "gulp serve"
   },
   "repository": {
     "type": "git",

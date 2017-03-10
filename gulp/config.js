@@ -6,7 +6,7 @@ const ports = {
 const directories = {
   src: './src',
   build: './dist',
-  demo: './demo',
+  demo: './docs',
 };
 
 const files = {
