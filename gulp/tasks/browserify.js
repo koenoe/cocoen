@@ -51,6 +51,7 @@ function buildScript(name, file, entries) {
       .pipe(rename({ suffix: '.min' }))
       .pipe(gulpif(createSourcemap, sourcemaps.write('.')))
       .pipe(gulp.dest(`${config.directories.build}/js`))
+      .pipe(gulp.dest(`${config.directories.demo}/js`))
       .pipe(browserSync.stream());
   }
 

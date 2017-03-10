@@ -26,5 +26,6 @@ gulp.task('styles', () => {
     .pipe(rename({ suffix: '.min' }))
     .pipe(gulpif(createSourcemap, sourcemaps.write('.')))
     .pipe(gulp.dest(`${config.directories.build}/css`))
+    .pipe(gulp.dest(`${config.directories.demo}/css`))
     .pipe(browserSync.stream());
 });
