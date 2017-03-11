@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
+		<title>Cocoen jQuery Demo</title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<link rel="stylesheet" href="css/cocoen.min.css">
+    <style>
+			body {
+				font-family: sans-serif;
+				font-size: 16px;
+				margin: 2rem;
+				text-align: center;
+			}
+      .container {
+				position: relative;
+				margin: auto;
+				max-width: 700px;
+				text-align: center;
+			}
+    </style>
+	</head>
+	<body>
+
+		<div class="container">
+			<h1>Cocoen</h1>
+			<div class="cocoen">
+				<img src="img/before.jpg" alt="">
+				<img src="img/after.jpg" alt="">
+			</div>
+		</div>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+		<script src="js/cocoen.min.js"></script>
+    <script src="js/cocoen-jquery.min.js"></script>
+		<script>
+			$(function(){
+				$('.cocoen').cocoen();
+			});
+		</script>
+	</body>
+</html>

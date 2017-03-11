@@ -111,7 +111,7 @@ class Cocoen {
 }
 
 Cocoen.defaults = {
-  dragElementSelector: '.cocoen__drag',
+  dragElementSelector: '.cocoen-drag',
   dragCallback: null,
 };
 

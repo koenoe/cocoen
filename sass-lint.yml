@@ -1,52 +1,36 @@
-# Linter Options
-options:
-  # Don't merge default rules
-  merge-default-rules: false
-  # Set the formatter to 'html'
-  formatter: html
-  # Output file instead of logging results
-  output-file: 'linters/sass-lint.html'
-  # Raise an error if more than 50 warnings are generated
-  max-warnings: 50
-# File Options
 files:
-  include: 'sass/**/*.s+(a|c)ss'
-  ignore:
-    - 'sass/vendor/**/*.*'
-# Rule Configuration
+  include: '**/*.s+(a|c)ss'
+options:
+  formatter: stylish
+  merge-default-rules: false
 rules:
-  extends-before-mixins: 2
-  extends-before-declarations: 2
-  placeholder-in-extend: 2
-  mixins-before-declarations:
-    - 2
-    -
-      exclude:
-        - breakpoint
-        - mq
-
-  no-warn: 1
-  no-debug: 1
-  no-ids: 2
-  no-important: 2
-  hex-notation:
-    - 2
-    -
-      style: uppercase
-  indentation:
-    - 2
-    -
-      size: 2
-  property-sort-order:
+  bem-depth: 1
+  border-zero:
     - 1
-    -
-      order:
-        - display
-        - margin
-      ignore-custom-properties: true
-  variable-for-property:
-    - 2
-    -
-      properties:
-        - margin
-        - content
+    - convention: zero
+  brace-style:
+    - 1
+    - allow-single-line: false
+  class-name-format:
+    - 1
+    - convention: ^(?!js-).*
+      convention-explanation: should not be written in the form js-*
+  extends-before-declarations: 0
+  extends-before-mixins: 0
+  function-name-format: 1
+  id-name-format:
+    - 1
+    - convention: hyphenatedbem
+  leading-zero: 0
+  mixin-name-format: 1
+  mixins-before-declarations: 0
+  no-extends: 1
+  no-qualifying-elements: 0
+  placeholder-name-format:
+    - 1
+    - convention: hyphenatedbem
+  property-sort-order: 0
+  quotes:
+    - 1
+    - style: double
+  variable-name-format: 1
