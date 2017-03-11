@@ -1,0 +1,30 @@
+{
+  "name": "cocoen",
+  "homepage": "https://github.com/koenoe/cocoen",
+  "authors": [
+    "Koen Romers <info@koenromers.com>"
+  ],
+  "description": "Much like the caterpillar, your image will undergo a clear transformation with Cocoen. Making comparison really easy, it’s as straightforward way of seeing your images in a new light.",
+  "version": "2.0.0",
+  "main": [
+    "dist/css/cocoen.min.css",
+    "dist/js/cocoen.min.js"
+  ],
+  "keywords": [
+    "before",
+    "after",
+    "slider",
+    "compare",
+    "image",
+    "cocoon"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": { }
+}
