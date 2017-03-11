@@ -7,11 +7,14 @@ const tasks = fs.readdirSync('./gulp/tasks/').filter(onlyScripts);
 
 // Ensure process ends after all Gulp tasks are finished
 gulp.on('stop', () => {
-  if (!global.isWatching) {
-    process.nextTick(() => {
-      process.exit(0);
-    });
+  function stop() {
+    if (!global.isWatching) {
+      process.nextTick(() => {
+        process.exit(0);
+      });
+    }
   }
+  setTimeout(stop, 500);
 });
 
 tasks.forEach((task) => {

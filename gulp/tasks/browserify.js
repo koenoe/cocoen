@@ -17,8 +17,7 @@ import config from '../config';
 function buildScript(file, entries, name) {
   const options = {
     entries,
-    debug: !global.isBuild,
-    fullPaths: !global.isBuild,
+    debug: true,
   };
   if (name) {
     options.standalone = name;
