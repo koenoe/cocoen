@@ -48,6 +48,9 @@ Include the `cocoen.min.js` and `cocoen-jquery.min.js` scripts in your page, and
 $('.cocoen').cocoen();
 ```
 
+### AngularJS
+Coming soon!
+
 # License
 
 The code and the documentation are released under the [MIT License](LICENSE).
