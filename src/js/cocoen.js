@@ -1,109 +1,118 @@
-;(function ( $, window, document, undefined ) {
+const init = Symbol('init');
+const createElements = Symbol('createElements');
+const addEventListeners = Symbol('addEventListeners');
 
-	'use strict';
+class Cocoen {
+  constructor(element, options) {
+    this.options = Object.assign({}, Cocoen.defaults, options);
+    this.element = element || document.querySelector('.cocoen');
 
-	var pluginName = 'cocoen',
-		defaults = {
-			dragElementSelector: '.cocoen__drag'
-		};
+    this[init]();
+  }
 
-	function Plugin( element, options ) {
-		this.options = $.extend( {}, defaults, options);
-		this.$element = $(element);
+  [init]() {
+    this[createElements]();
+    this[addEventListeners]();
+    this.dimensions();
+  }
 
-		this.init();
-	}
+  [createElements]() {
+    // Create drag element
+    const span = document.createElement('span');
+    span.className = this.options.dragElementSelector.replace('.', '');
+    this.element.appendChild(span);
+    // Wrap first image in div
+    const wrapper = document.createElement('div');
+    const firstImage = this.element.querySelector('img:first-child');
+    firstImage.before(wrapper);
+    wrapper.append(firstImage);
+    // Set class elements we need later
+    this.dragElement = this.element.querySelector(this.options.dragElementSelector);
+    this.beforeElement = this.element.querySelector('div:first-child');
+    this.beforeImage = this.beforeElement.querySelector('img');
+  }
 
-	Plugin.prototype = {
+  [addEventListeners]() {
+    this.element.addEventListener('click', this.onTap.bind(this));
+    this.element.addEventListener('mousemove', this.onDrag.bind(this));
+    this.element.addEventListener('touchmove', this.onDrag.bind(this));
+    this.dragElement.addEventListener('mousedown', this.onDragStart.bind(this));
+    this.dragElement.addEventListener('touchstart', this.onDragStart.bind(this));
 
-		init: function() {
-			this.createElements();
-			this.setDimensions();
-			this.addEventListeners();
-		},
-		createElements: function(){
-			this.$element.append('<span class="'+ this.options.dragElementSelector.replace('.','') +'"></span>');
-			this.$element.find('img:first-child').wrap('<div></div>');
+    window.addEventListener('mouseup', this.onDragEnd.bind(this));
+    window.addEventListener('resize', this.dimensions.bind(this));
+  }
 
-			this.$dragElement = this.$element.find(this.options.dragElementSelector);
-			this.$before = this.$element.find('div:first-child');
-			this.$beforeImg = this.$before.find('img');
-		},
-		addEventListeners: function(){
-			this.$element.on('click', this.onTap.bind(this));
-			this.$element.on('mousedown touchstart', this.options.dragElementSelector, this.onDragStart.bind(this));
-			this.$element.on('mousemove touchmove', this.onDrag.bind(this));
+  onTap(e) {
+    e.preventDefault();
 
-			$(window).on('mouseup', this.onDragEnd.bind(this));
-			$(window).on('resize', this.setDimensions.bind(this));
-		},
-		onTap: function(e){
-			e.preventDefault();
+    this.leftPos = (e.pageX) ? e.pageX : e.originalEvent.touches[0].pageX;
+    this.requestDrag();
+  }
 
-			this.leftPos = (e.pageX) ? e.pageX : e.originalEvent.touches[0].pageX;
-			this.requestDrag();
-		},
-		onDragStart: function(e){
-			e.preventDefault();
+  onDragStart(e) {
+    e.preventDefault();
 
-			var startX = (e.pageX) ? e.pageX : e.originalEvent.touches[0].pageX;
+    const startX = (e.pageX) ? e.pageX : e.originalEvent.touches[0].pageX;
+    const offsetLeft = this.dragElement.getBoundingClientRect().left + document.body.scrollLeft;
+    this.posX = (offsetLeft + this.dragElementWidth) - startX;
+    this.isDragging = true;
+  }
 
-			this.posX = this.$dragElement.offset().left + this.dragWidth - startX;
-			this.isDragging = true;
-		},
-		onDragEnd: function(e){
-			e.preventDefault();
+  onDragEnd(e) {
+    e.preventDefault();
+    this.isDragging = false;
+  }
 
-			this.isDragging = false;
-		},
-		onDrag: function(e){
-			e.preventDefault();
+  onDrag(e) {
+    e.preventDefault();
 
-			if(!this.isDragging){
-				return;
-			}
+    if (!this.isDragging) {
+      return;
+    }
 
-			this.moveX = (e.pageX) ? e.pageX : e.originalEvent.touches[0].pageX;
-			this.leftPos = this.moveX + this.posX - this.dragWidth;
+    this.moveX = (e.pageX) ? e.pageX : e.originalEvent.touches[0].pageX;
+    this.leftPos = (this.moveX + this.posX) - this.dragElementWidth;
 
-			this.requestDrag();
-		},
-		requestDrag: function(){
-			requestAnimationFrame(this.drag.bind(this));
-		},
-		drag: function(){
+    this.requestDrag();
+  }
 
-			if(this.leftPos < this.minLeftPos) {
-				this.leftPos = this.minLeftPos;
-			} else if(this.leftPos > this.maxLeftPos) {
-				this.leftPos = this.maxLeftPos;
-			}
+  dimensions() {
+    this.elementWidth = parseInt(window.getComputedStyle(this.element).width, 10);
+    this.elementOffsetLeft = this.element.getBoundingClientRect().left + document.body.scrollLeft;
+    this.beforeImage.style.width = `${this.elementWidth}px`;
+    this.dragElementWidth = parseInt(window.getComputedStyle(this.dragElement).width, 10);
+    this.minLeftPos = this.elementOffsetLeft + 10;
+    this.maxLeftPos = (this.elementOffsetLeft + this.elementWidth) - this.dragElementWidth - 10;
+  }
 
-			var width = (this.leftPos + (this.dragWidth / 2) - this.containerOffset) * 100 / this.containerWidth + '%';
+  drag() {
+    if (this.leftPos < this.minLeftPos) {
+      this.leftPos = this.minLeftPos;
+    } else if (this.leftPos > this.maxLeftPos) {
+      this.leftPos = this.maxLeftPos;
+    }
 
-			this.$dragElement.css('left', width);
-			this.$before.css('width', width);
-		},
-		setDimensions: function(){
-			this.$beforeImg.css('width', this.$element.width());
+    let openRatio = (this.leftPos + (this.dragElementWidth / 2)) - this.elementOffsetLeft;
+    openRatio /= this.elementWidth;
+    const width = `${openRatio * 100}%`;
 
-			this.dragWidth = this.$dragElement.outerWidth();
-			this.containerWidth = this.$element.outerWidth();
-			this.containerOffset = this.$element.offset().left;
-			this.minLeftPos = this.containerOffset + 10;
-			this.maxLeftPos = this.containerOffset + this.containerWidth - this.dragWidth - 10;
-			this.isDragging = false;
-		}
+    this.dragElement.style.left = width;
+    this.beforeElement.style.width = width;
 
-	};
+    if (this.options.dragCallback) {
+      this.options.dragCallback(openRatio);
+    }
+  }
 
-	$.fn[pluginName] = function ( options ) {
-		return this.each(function () {
-			if (!$.data(this, 'plugin_' + pluginName)) {
-				$.data(this, 'plugin_' + pluginName,
-				new Plugin( this, options ));
-			}
-		});
-	};
+  requestDrag() {
+    window.requestAnimationFrame(this.drag.bind(this));
+  }
+}
 
-})( jQuery, window, document );
+Cocoen.defaults = {
+  dragElementSelector: '.cocoen-drag',
+  dragCallback: null,
+};
+
+module.exports = Cocoen;

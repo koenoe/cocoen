@@ -44,3 +44,4 @@ node_modules
 .sass-cache
 bower_components
 .publish
+docs/_site
