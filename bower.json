@@ -5,10 +5,11 @@
     "Koen Romers <info@koenromers.com>"
   ],
   "description": "Much like the caterpillar, your image will undergo a clear transformation with Cocoen. Making comparison really easy, it’s as straightforward way of seeing your images in a new light.",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "main": [
-    "dist/css/cocoen.min.css",
-    "dist/js/cocoen.min.js"
+    "src/scss/cocoen.css",
+    "src/js/cocoen.js",
+    "src/js/cocoen-jquery.js"
   ],
   "keywords": [
     "before",

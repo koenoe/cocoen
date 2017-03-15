@@ -1,22 +1,18 @@
-const init = Symbol('init');
-const createElements = Symbol('createElements');
-const addEventListeners = Symbol('addEventListeners');
-
 class Cocoen {
   constructor(element, options) {
     this.options = Object.assign({}, Cocoen.defaults, options);
     this.element = element || document.querySelector('.cocoen');
 
-    this[init]();
+    this.init();
   }
 
-  [init]() {
-    this[createElements]();
-    this[addEventListeners]();
+  init() {
+    this.createElements();
+    this.addEventListeners();
     this.dimensions();
   }
 
-  [createElements]() {
+  createElements() {
     // Create drag element
     const span = document.createElement('span');
     span.className = this.options.dragElementSelector.replace('.', '');
@@ -24,15 +20,15 @@ class Cocoen {
     // Wrap first image in div
     const wrapper = document.createElement('div');
     const firstImage = this.element.querySelector('img:first-child');
-    firstImage.before(wrapper);
-    wrapper.append(firstImage);
+    wrapper.appendChild(firstImage.cloneNode(true));
+    firstImage.parentNode.replaceChild(wrapper, firstImage);
     // Set class elements we need later
     this.dragElement = this.element.querySelector(this.options.dragElementSelector);
     this.beforeElement = this.element.querySelector('div:first-child');
     this.beforeImage = this.beforeElement.querySelector('img');
   }
 
-  [addEventListeners]() {
+  addEventListeners() {
     this.element.addEventListener('click', this.onTap.bind(this));
     this.element.addEventListener('mousemove', this.onDrag.bind(this));
     this.element.addEventListener('touchmove', this.onDrag.bind(this));
@@ -41,6 +37,15 @@ class Cocoen {
 
     window.addEventListener('mouseup', this.onDragEnd.bind(this));
     window.addEventListener('resize', this.dimensions.bind(this));
+  }
+
+  dimensions() {
+    this.elementWidth = parseInt(window.getComputedStyle(this.element).width, 10);
+    this.elementOffsetLeft = this.element.getBoundingClientRect().left + document.body.scrollLeft;
+    this.beforeImage.style.width = `${this.elementWidth}px`;
+    this.dragElementWidth = parseInt(window.getComputedStyle(this.dragElement).width, 10);
+    this.minLeftPos = this.elementOffsetLeft + 10;
+    this.maxLeftPos = (this.elementOffsetLeft + this.elementWidth) - this.dragElementWidth - 10;
   }
 
   onTap(e) {
@@ -75,15 +80,6 @@ class Cocoen {
     this.leftPos = (this.moveX + this.posX) - this.dragElementWidth;
 
     this.requestDrag();
-  }
-
-  dimensions() {
-    this.elementWidth = parseInt(window.getComputedStyle(this.element).width, 10);
-    this.elementOffsetLeft = this.element.getBoundingClientRect().left + document.body.scrollLeft;
-    this.beforeImage.style.width = `${this.elementWidth}px`;
-    this.dragElementWidth = parseInt(window.getComputedStyle(this.dragElement).width, 10);
-    this.minLeftPos = this.elementOffsetLeft + 10;
-    this.maxLeftPos = (this.elementOffsetLeft + this.elementWidth) - this.dragElementWidth - 10;
   }
 
   drag() {
