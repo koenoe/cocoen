@@ -4,12 +4,17 @@
   "authors": [
     "Koen Romers <info@koenromers.com>"
   ],
-  "description": "Much like the caterpillar, your image will undergo a clear transformation with Cocoen. Making comparison really easy, it’s as straightforward way of seeing your images in a new light.",
-  "version": "2.0.1",
+  "description": "Touch-enabled before/after slider.",
+  "version": "2.0.2",
   "main": [
+<<<<<<< HEAD
     "src/scss/cocoen.scss",
     "src/js/cocoen.js",
     "src/js/cocoen-jquery.js"
+=======
+    "src/scss/cocoen.css",
+    "src/js/cocoen.js"
+>>>>>>> fix dependency versions and bower.json
   ],
   "keywords": [
     "before",
