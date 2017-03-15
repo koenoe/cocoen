@@ -1,6 +1,6 @@
 {
   "name": "cocoen",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Much like the caterpillar, your image will undergo a clear transformation with Cocoen. Making comparison really easy, it’s as straightforward way of seeing your images in a new light.",
   "main": "dist/js/cocoen.min.js",
   "scripts": {
@@ -21,6 +21,7 @@
   "dependencies": {},
   "devDependencies": {
     "babel-cli": "6.23.0",
+    "babel-plugin-transform-object-assign": "^6.22.0",
     "babel-preset-env": "1.2.1",
     "babelify": "7.3.0",
     "browser-sync": "2.18.8",
