@@ -8,6 +8,7 @@
   "version": "2.0.2",
   "main": [
 <<<<<<< HEAD
+<<<<<<< HEAD
     "src/scss/cocoen.scss",
     "src/js/cocoen.js",
     "src/js/cocoen-jquery.js"
@@ -15,6 +16,15 @@
     "src/scss/cocoen.css",
     "src/js/cocoen.js"
 >>>>>>> fix dependency versions and bower.json
+=======
+    "src/scss/cocoen.css",
+    "src/js/cocoen.js"
+=======
+    "src/scss/cocoen.scss",
+    "src/js/cocoen.js",
+    "src/js/cocoen-jquery.js"
+>>>>>>> Fix Bower stylesheet filename
+>>>>>>> Fix Bower stylesheet filename
   ],
   "keywords": [
     "before",
