@@ -9,6 +9,7 @@
   "main": [
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "src/scss/cocoen.scss",
     "src/js/cocoen.js",
     "src/js/cocoen-jquery.js"
@@ -25,6 +26,10 @@
     "src/js/cocoen-jquery.js"
 >>>>>>> Fix Bower stylesheet filename
 >>>>>>> Fix Bower stylesheet filename
+=======
+    "src/scss/cocoen.scss",
+    "src/js/cocoen.js"
+>>>>>>> fix conflict
   ],
   "keywords": [
     "before",
