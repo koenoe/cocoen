@@ -7,8 +7,8 @@
   "description": "Touch-enabled before/after slider.",
   "version": "2.0.2",
   "main": [
-    "src/js/cocoen.js",
-    "src/scss/cocoen.scss"
+    "src/scss/cocoen.scss",
+    "src/js/cocoen.js"
   ],
   "keywords": [
     "before",
