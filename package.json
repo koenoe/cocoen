@@ -8,6 +8,10 @@
     "start": "gulp serve",
     "build": "gulp build"
   },
+  "pre-commit": [
+    "build",
+    "test"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/koenoe/cocoen.git"
