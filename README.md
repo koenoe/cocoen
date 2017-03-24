@@ -41,6 +41,12 @@ Include the `cocoen.min.js` script in your page, and then:
 ```js
 new Cocoen(document.querySelector('.cocoen'));
 ```
+Multiple Cocoens in one page:
+```js
+document.querySelectorAll('.cocoen').forEach(function(element){
+  new Cocoen(element);
+});
+```
 
 ### jQuery
 Include the `cocoen.min.js` and `cocoen-jquery.min.js` scripts in your page, and then:
