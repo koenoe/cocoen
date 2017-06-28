@@ -76,7 +76,7 @@ class Cocoen {
       return;
     }
 
-    this.moveX = (e.pageX) ? e.pageX : e.originalEvent.touches[0].pageX;
+    this.moveX = (e.pageX) ? e.pageX : e.touches[0].pageX;
     this.leftPos = (this.moveX + this.posX) - this.dragElementWidth;
 
     this.requestDrag();
