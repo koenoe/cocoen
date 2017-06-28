@@ -51,14 +51,14 @@ class Cocoen {
   onTap(e) {
     e.preventDefault();
 
-    this.leftPos = (e.pageX) ? e.pageX : e.originalEvent.touches[0].pageX;
+    this.leftPos = (e.pageX) ? e.pageX : e.touches[0].pageX;
     this.requestDrag();
   }
 
   onDragStart(e) {
     e.preventDefault();
 
-    const startX = (e.pageX) ? e.pageX : e.originalEvent.touches[0].pageX;
+    const startX = (e.pageX) ? e.pageX : e.touches[0].pageX;
     const offsetLeft = this.dragElement.getBoundingClientRect().left + document.body.scrollLeft;
     this.posX = (offsetLeft + this.dragElementWidth) - startX;
     this.isDragging = true;
