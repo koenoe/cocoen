@@ -36,7 +36,7 @@ Include the Cocoen stylesheet in your page:
 <link rel="stylesheet" href="css/cocoen.min.css" />
 ```
 
-### Pure Javascript
+### Plain Javascript
 Include the `cocoen.min.js` script in your page, and then:
 ```js
 new Cocoen(document.querySelector('.cocoen'));
