@@ -43,12 +43,6 @@ let cocoen = new Cocoen(document.querySelector('.cocoen'), {
   orientation: 'vertical|horizontal'
 });
 ```
-Multiple Cocoens in one page:
-```js
-document.querySelectorAll('.cocoen').forEach(function(element){
-  new Cocoen(element);
-});
-```
 Change orientation
 ```js
 cocoen.changeOrientation();
@@ -57,6 +51,12 @@ cocoen.changeOrientation('vertical|horizontal');
 Reload
 ```
 cocoen.reload();
+```
+Multiple Cocoens in one page:
+```js
+document.querySelectorAll('.cocoen').forEach(function(element){
+  new Cocoen(element);
+});
 ```
 
 ### jQuery
