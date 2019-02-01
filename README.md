@@ -39,7 +39,9 @@ Include the Cocoen stylesheet in your page:
 ### Plain Javascript
 Include the `cocoen.min.js` script in your page, and then:
 ```js
-new Cocoen(document.querySelector('.cocoen'));
+new Cocoen(document.querySelector('.cocoen'), {
+  orientation: 'vertical|horizontal'
+});
 ```
 Multiple Cocoens in one page:
 ```js
