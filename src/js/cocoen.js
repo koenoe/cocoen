@@ -2,13 +2,15 @@ class Cocoen {
   constructor(element, options) {
     this.options = Object.assign({}, Cocoen.defaults, options);
     this.element = element || document.querySelector('.cocoen');
+    this.originalElement = element.cloneNode(true);
     this.orientation = this.options.orientation;
-    this.element.className = `${this.element.className} ${this.orientation}`;
 
     this.init();
   }
 
   init() {
+    this.element.className = `${this.element.className} ${this.orientation}`;
+
     this.createElements();
     this.addEventListeners();
   }
@@ -34,14 +36,31 @@ class Cocoen {
   }
 
   addEventListeners() {
-    this.element.addEventListener('click', this.onTap.bind(this));
-    this.element.addEventListener('mousemove', this.onDrag.bind(this));
-    this.element.addEventListener('touchmove', this.onDrag.bind(this));
-    this.dragElement.addEventListener('mousedown', this.onDragStart.bind(this));
-    this.dragElement.addEventListener('touchstart', this.onDragStart.bind(this));
+    this.onTapCallback = this.onTap.bind(this);
+    this.onDragCallback = this.onDrag.bind(this);
+    this.onDragStartCallback = this.onDragStart.bind(this);
+    this.onDragEndCallback = this.onDragEnd.bind(this);
+    this.dimensionsCallback = this.dimensions.bind(this);
 
-    window.addEventListener('mouseup', this.onDragEnd.bind(this));
-    window.addEventListener('resize', this.dimensions.bind(this));
+    this.element.addEventListener('click', this.onTapCallback);
+    this.element.addEventListener('mousemove', this.onDragCallback);
+    this.element.addEventListener('touchmove', this.onDragCallback);
+    this.dragElement.addEventListener('mousedown', this.onDragStartCallback);
+    this.dragElement.addEventListener('touchstart', this.onDragStartCallback);
+
+    window.addEventListener('mouseup', this.onDragEndCallback);
+    window.addEventListener('resize', this.dimensionsCallback);
+  }
+
+  removeEventListeners() {
+    this.element.removeEventListener('click', this.onTapCallback);
+    this.element.removeEventListener('mousemove', this.onDragCallback);
+    this.element.removeEventListener('touchmove', this.onDragCallback);
+    this.dragElement.removeEventListener('mousedown', this.onDragStartCallback);
+    this.dragElement.removeEventListener('touchstart', this.onDragStartCallback);
+
+    window.removeEventListener('mouseup', this.onDragEndCallback);
+    window.removeEventListener('resize', this.dimensionsCallback);
   }
 
   dimensions() {
@@ -149,6 +168,31 @@ class Cocoen {
 
   requestDrag() {
     window.requestAnimationFrame(this.drag.bind(this));
+  }
+
+  toggleOrientation() {
+    if (this.orientation === 'vertical') {
+      this.orientation = 'horizontal';
+    } else {
+      this.orientation = 'vertical';
+    }
+
+    this.reload();
+  }
+
+  changeOrientation(orientation) {
+    this.orientation = orientation;
+    this.reload();
+  }
+
+  reload() {
+    this.removeEventListeners();
+
+    const newElement = this.originalElement.cloneNode(true);
+    this.element.replaceWith(newElement);
+    this.element = newElement;
+
+    this.init();
   }
 }
 
