@@ -9,7 +9,9 @@ class Cocoen {
   }
 
   init() {
-    this.element.className = `${this.element.className} ${this.orientation}`;
+    this.element.classList.remove('vertical');
+    this.element.classList.remove('horizontal');
+    this.element.classList.add(this.orientation);
 
     this.createElements();
     this.addEventListeners();
