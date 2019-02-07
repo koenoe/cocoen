@@ -2,7 +2,7 @@ class Cocoen {
   constructor(element, options) {
     this.options = Object.assign({}, Cocoen.defaults, options);
     this.element = element || document.querySelector('.cocoen');
-    this.originalElement = element.cloneNode(true);
+    this.originalElement = this.element.cloneNode(true);
     this.orientation = this.options.orientation;
 
     this.init();
