@@ -35,7 +35,8 @@ class Cocoen {
     this.dragElement.addEventListener('mousedown', this.onDragStart.bind(this));
     this.dragElement.addEventListener('touchstart', this.onDragStart.bind(this));
 
-    window.addEventListener('mouseup touchend', this.onDragEnd.bind(this));
+    window.addEventListener('mouseup', this.onDragEnd.bind(this));
+    window.addEventListener('touchend', this.onDragEnd.bind(this));
     window.addEventListener('resize', this.dimensions.bind(this));
   }
 
