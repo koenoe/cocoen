@@ -70,8 +70,6 @@ class Cocoen {
   }
 
   onDrag(e) {
-    e.preventDefault();
-
     if (!this.isDragging) {
       return;
     }
