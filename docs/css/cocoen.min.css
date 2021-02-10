@@ -1,1 +1,60 @@
-.cocoen{box-sizing:border-box;cursor:pointer;line-height:0;margin:0;overflow:hidden;padding:0;position:relative;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.cocoen *{box-sizing:inherit}.cocoen ::after,.cocoen ::before{box-sizing:inherit}.cocoen img,.cocoen picture>img{max-width:none}.cocoen>img,.cocoen>picture>img{display:block;width:100%}.cocoen>div:first-child,picture .cocoen>div{height:100%;left:0;overflow:hidden;position:absolute;top:0;width:50%}.cocoen-drag{background:#fff;bottom:0;cursor:ew-resize;left:50%;margin-left:-1px;position:absolute;top:0;width:2px}.cocoen-drag::before{border:3px solid #fff;content:'';height:30px;left:50%;margin-left:-7px;margin-top:-18px;position:absolute;top:50%;width:14px}
+/* line 3, src/scss/cocoen.scss */
+.cocoen {
+  box-sizing: border-box;
+  cursor: pointer;
+  line-height: 0;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  position: relative;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none; }
+  /* line 13, src/scss/cocoen.scss */
+  .cocoen * {
+    box-sizing: inherit; }
+    /* line 16, src/scss/cocoen.scss */
+    .cocoen *::after, .cocoen *::before {
+      box-sizing: inherit; }
+  /* line 22, src/scss/cocoen.scss */
+  .cocoen img,
+  .cocoen picture > img {
+    max-width: none; }
+  /* line 27, src/scss/cocoen.scss */
+  .cocoen > img,
+  .cocoen > picture > img {
+    display: block;
+    width: 100%; }
+  /* line 34, src/scss/cocoen.scss */
+  .cocoen > div:first-child,
+  picture .cocoen > div {
+    height: 100%;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    width: 50%; }
+  /* line 45, src/scss/cocoen.scss */
+  .cocoen-drag {
+    background: #fff;
+    bottom: 0;
+    cursor: ew-resize;
+    left: 50%;
+    margin-left: -1px;
+    position: absolute;
+    top: 0;
+    width: 2px; }
+    /* line 55, src/scss/cocoen.scss */
+    .cocoen-drag::before {
+      border: 3px solid #fff;
+      content: '';
+      height: 30px;
+      left: 50%;
+      margin-left: -7px;
+      margin-top: -18px;
+      position: absolute;
+      top: 50%;
+      width: 14px; }
+
+/*# sourceMappingURL=cocoen.min.css.map */

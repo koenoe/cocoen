@@ -3,7 +3,7 @@ class Cocoen {
     this.options = Object.assign({}, Cocoen.defaults, options);
     this.element = element || document.querySelector('.cocoen');
 
-    // bind event handlers
+    // Bind event handlers
     this.handleTap = this.onTap.bind(this);
     this.handleDrag = this.onDrag.bind(this);
     this.handleDragStart = this.onDragStart.bind(this);
@@ -16,6 +16,7 @@ class Cocoen {
   init() {
     // If already active, escape
     if (this.isActive) return;
+
     this.createElements();
     this.addEventListeners();
     this.dimensions();
@@ -25,6 +26,7 @@ class Cocoen {
   }
 
   destroy() {
+    // If not active, escape
     if (!this.isActive) return;
 
     this.removeEventListeners();
@@ -51,6 +53,7 @@ class Cocoen {
   }
 
   destroyElements() {
+    // Revert instance to original structure
     this.element.replaceChild(this.beforeImage, this.beforeElement);
     this.element.removeChild(this.dragElement);
   }
@@ -67,6 +70,7 @@ class Cocoen {
   }
 
   removeEventListeners() {
+    // Remove all event handlers
     this.element.removeEventListener('click', this.handleTap);
     this.element.removeEventListener('mousemove', this.handleDrag);
     this.element.removeEventListener('touchmove', this.handleDrag);
@@ -78,8 +82,11 @@ class Cocoen {
   }
 
   cleanUp() {
+    // Release any detached DOM references
     this.dragElement = null;
     this.beforeElement = null;
+
+    // Revert width in style attribute
     this.beforeImage.style.removeProperty('width');
   }
 
