@@ -7,9 +7,20 @@ class Cocoen {
   }
 
   init() {
+    // If already active, escape
+    if (this.isActive) return;
     this.createElements();
     this.addEventListeners();
     this.dimensions();
+
+    // Set flag
+    this.isActive = true;
+  }
+
+  destroy() {
+    if (!this.isActive) return;
+
+    this.isActive = false;
   }
 
   createElements() {
