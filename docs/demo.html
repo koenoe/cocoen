@@ -27,6 +27,10 @@
 
 		<div class="container">
 			<h1>Cocoen</h1>
+			<div class="buttons">
+				<button class="btn" id="create">Create Cocoen</button>
+				<button class="btn" id="destroy">Destroy Cocoen</button>
+			</div>
 			<div class="cocoen">
 				<img src="img/before.jpg" alt="">
 				<img src="img/after.jpg" alt="">
@@ -36,7 +40,13 @@
 		<script src="js/cocoen.min.js"></script>
 		<script>
 			document.addEventListener('DOMContentLoaded', function(){
-				new Cocoen();
+				const instance = new Cocoen();
+				document.getElementById('create').onclick = function() {
+					instance.init();
+				}
+				document.getElementById('destroy').onclick = function() {
+					instance.destroy();
+				}
 			});
 		</script>
 	</body>
