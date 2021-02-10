@@ -73,6 +73,7 @@ class Cocoen {
   cleanUp() {
     this.dragElement = null;
     this.beforeElement = null;
+    this.beforeImage.style.removeProperty('width');
   }
 
   dimensions() {
