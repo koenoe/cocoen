@@ -20,6 +20,10 @@ class Cocoen {
   destroy() {
     if (!this.isActive) return;
 
+    this.removeEventListeners();
+    this.destroyElements();
+    this.cleanUp();
+
     this.isActive = false;
   }
 
@@ -39,6 +43,11 @@ class Cocoen {
     this.beforeImage = this.beforeElement.querySelector('img');
   }
 
+  destroyElements() {
+    this.element.replaceChild(this.beforeImage, this.beforeElement);
+    this.element.removeChild(this.dragElement);
+  }
+
   addEventListeners() {
     this.element.addEventListener('click', this.onTap.bind(this));
     this.element.addEventListener('mousemove', this.onDrag.bind(this));
@@ -48,6 +57,22 @@ class Cocoen {
 
     window.addEventListener('mouseup', this.onDragEnd.bind(this));
     window.addEventListener('resize', this.dimensions.bind(this));
+  }
+
+  removeEventListeners() {
+    this.element.removeEventListener('click', this.onTap.bind(this));
+    this.element.removeEventListener('mousemove', this.onDrag.bind(this));
+    this.element.removeEventListener('touchmove', this.onDrag.bind(this));
+    this.dragElement.removeEventListener('mousedown', this.onDragStart.bind(this));
+    this.dragElement.removeEventListener('touchstart', this.onDragStart.bind(this));
+
+    window.removeEventListener('mouseup', this.onDragEnd.bind(this));
+    window.removeEventListener('resize', this.dimensions.bind(this));
+  }
+
+  cleanUp() {
+    this.dragElement = null;
+    this.beforeElement = null;
   }
 
   dimensions() {
