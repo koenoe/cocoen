@@ -4,4 +4,7 @@ export type Bar = 'Bar';
 const foo: Foo = 'Foo';
 const bar: Bar = 'Bar';
 
-console.log({ foo, bar });
+export const init = () => {
+  console.log('hoi cocoen');
+  console.log({ foo, bar });
+};

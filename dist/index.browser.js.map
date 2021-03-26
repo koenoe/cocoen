@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../src/index.ts"],
-  "sourcesContent": ["export type Foo = 'Foo';\nexport type Bar = 'Bar';\n\nconst foo: Foo = 'Foo';\nconst bar: Bar = 'Bar';\n\nconsole.log({ foo, bar });\n"],
-  "mappings": "iBAAA,SAGA,GAAM,GAAW,MACX,EAAW,MAEjB,QAAQ,IAAI,CAAE,MAAK",
-  "names": []
-}

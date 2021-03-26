@@ -2,6 +2,6 @@
   "version": 3,
   "sources": ["../src/index.ts"],
   "sourcesContent": ["export type Foo = 'Foo';\nexport type Bar = 'Bar';\n\nconst foo: Foo = 'Foo';\nconst bar: Bar = 'Bar';\n\nexport const init = () => {\n  console.log('hoi cocoen');\n  console.log({ foo, bar });\n};\n"],
-  "mappings": "2GAAA,2BAGA,GAAM,GAAW,MACX,EAAW,MAEJ,EAAO,IAAM,CACxB,QAAQ,IAAI,cACZ,QAAQ,IAAI,CAAE,MAAK",
+  "mappings": "AAGA,GAAM,GAAW,MACX,EAAW,MAEJ,EAAO,IAAM,CACxB,QAAQ,IAAI,cACZ,QAAQ,IAAI,CAAE,MAAK",
   "names": []
 }
