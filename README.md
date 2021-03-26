@@ -40,13 +40,13 @@ Include the Cocoen stylesheet in your page:
 Include the `cocoen.min.js` script in your page, and then:
 
 ```js
-new Cocoen(document.querySelector(".cocoen"));
+new Cocoen(document.querySelector('.cocoen'));
 ```
 
 Multiple Cocoens in one page:
 
 ```js
-document.querySelectorAll(".cocoen").forEach(function (element) {
+document.querySelectorAll('.cocoen').forEach(function (element) {
   new Cocoen(element);
 });
 ```

@@ -4,7 +4,7 @@ on:
   # Run on main changes to track test coverage over time
   push:
     branches:
-      - "main"
+      - 'main'
   # Leave a PR comment to surface test coverage changes
   pull_request: ~
 

@@ -24,4 +24,4 @@ jobs:
       - name: Commit formatted files
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: "chore: Fix formatting"
+          commit_message: 'chore: Fix formatting'
