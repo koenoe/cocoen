@@ -4,7 +4,7 @@
 
 Touch-enabled before/after slider. Inspired by [before-after.js](https://github.com/jotform/before-after.js).
 
-![](readme.gif)
+![Example](readme.gif)
 
 ## Quick start
 
@@ -14,7 +14,7 @@ Touch-enabled before/after slider. Inspired by [before-after.js](https://github.
 
 Install with NPM
 
-```
+```bash
 npm install cocoen --save
 ```
 
