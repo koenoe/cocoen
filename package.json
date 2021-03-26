@@ -2,17 +2,17 @@
   "name": "cocoen",
   "version": "3.0.0",
   "description": "Much like the caterpillar, your image will undergo a clear transformation with Cocoen. Making comparison really easy, it’s as straightforward way of seeing your images in a new light.",
-  "main": "dist/js/cocoen.min.js",
+  "homepage": "https://github.com/koenoe/cocoen#readme",
+  "bugs": {
+    "url": "https://github.com/koenoe/cocoen/issues"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/koenoe/cocoen.git"
   },
-  "author": "Koen Romers <info@koenromers.com>",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/koenoe/cocoen/issues"
-  },
-  "homepage": "https://github.com/koenoe/cocoen#readme",
+  "author": "Koen Romers <info@koenromers.com>",
+  "main": "dist/js/cocoen.min.js",
   "scripts": {
     "dev": "npm run build-js--watch",
     "dev-tdd": "npm run test--watch",

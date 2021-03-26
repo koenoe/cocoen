@@ -1,5 +1,5 @@
-type Foo = 'Bar';
+type Foo = "Bar";
 
-const foo: Foo = 'Bar';
+const foo: Foo = "Bar";
 
-console.log({foo});
+console.log({ foo });
