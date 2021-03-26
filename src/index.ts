@@ -4,7 +4,10 @@ export type Bar = 'Bar';
 const foo: Foo = 'Foo';
 const bar: Bar = 'Bar';
 
-export const init = () => {
-  console.log('hoi cocoen');
+export const create = () => {
+  console.log('create Cocoen here');
+};
+
+export const parse = () => {
   console.log({ foo, bar });
 };

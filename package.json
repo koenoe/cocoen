@@ -28,7 +28,7 @@
     "test--coverage": "npm run test -- --coverage",
     "test--watch": "npm run test -- --watch",
     "build": "rimraf dist && run-p build-js build-dts",
-    "build--watch": "run-p build-js--cjs--watch build-dts--watch",
+    "build--watch": "run-p build-js--watch build-dts--watch",
     "build-js": "node scripts/build.js",
     "build-js--watch": "node scripts/build.js --watch",
     "build-dts": "tsc --emitDeclarationOnly",

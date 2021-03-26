@@ -1,2 +1,2 @@
-var Cocoen=(()=>{var c=Object.defineProperty;var n=(r,o)=>{for(var t in o)c(r,t,{get:o[t],enumerable:!0})};var a={};n(a,{init:()=>e});var p="Foo",s="Bar",e=()=>{console.log("hoi cocoen"),console.log({foo:p,bar:s})};return a;})();
+var Cocoen=(()=>{var a=Object.defineProperty;var n=(c,o)=>{for(var e in o)a(c,e,{get:o[e],enumerable:!0})};var p={};n(p,{create:()=>r,parse:()=>t});var s="Foo",l="Bar",r=()=>{console.log("create Cocoen here")},t=()=>{console.log({foo:s,bar:l})};return p;})();
 //# sourceMappingURL=index.js.map
