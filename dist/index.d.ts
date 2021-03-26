@@ -1,5 +1,3 @@
-export declare type Foo = 'Foo';
-export declare type Bar = 'Bar';
-export declare const create: () => void;
-export declare const parse: () => void;
+export declare const create: (element: Element) => void;
+export declare const parse: (context: HTMLElement) => void;
 //# sourceMappingURL=index.d.ts.map

@@ -1,13 +1,32 @@
-export type Foo = 'Foo';
-export type Bar = 'Bar';
+import { Cocoen } from './components/cocoen';
 
-const foo: Foo = 'Foo';
-const bar: Bar = 'Bar';
+const name = 'cocoen';
+const componentName = `${name}-component`;
 
-export const create = () => {
-  console.log('create Cocoen here');
+// Define our custom Cocoen web component
+customElements.define(componentName, Cocoen);
+
+// const state = {
+//   cocoens: [],
+// };
+
+const onDOMContentLoaded = () => {
+  document.removeEventListener('DOMContentLoaded', onDOMContentLoaded);
+};
+document.addEventListener('DOMContentLoaded', onDOMContentLoaded);
+
+export const create = (element: Element): void => {
+  const component = document.createElement(componentName);
+  const before = element.querySelectorAll('img')[0];
+  const after = element.querySelectorAll('img')[1];
+  before.setAttribute('slot', 'before');
+  after.setAttribute('slot', 'after');
+  component.append(before.cloneNode(true));
+  component.append(after.cloneNode(true));
+  element.replaceWith(component);
 };
 
-export const parse = () => {
-  console.log({ foo, bar });
+export const parse = (context: HTMLElement): void => {
+  const elements = [...context.querySelectorAll(`.${name}`)];
+  elements.map((element) => create(element));
 };
