@@ -24,6 +24,7 @@ esbuild
   .build({
     bundle: true,
     entryPoints: ['src/index.ts'],
+    globalName: 'Cocoen',
     minify: true,
     outfile: 'dist/index.browser.js',
     sourcemap: true,
