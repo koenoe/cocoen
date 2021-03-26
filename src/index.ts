@@ -1,5 +1,7 @@
-type Foo = 'Bar';
+export type Foo = 'Foo';
+export type Bar = 'Bar';
 
-const foo: Foo = 'Bar';
+const foo: Foo = 'Foo';
+const bar: Bar = 'Bar';
 
-console.log({ foo });
+console.log({ foo, bar });
