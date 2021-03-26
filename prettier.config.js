@@ -1,6 +1,6 @@
 // Some settings are automatically inherited from .editorconfig
 module.exports = {
-  singleQuote: true,
+  endOfLine: 'auto',
   overrides: [
     {
       files: '.editorconfig',
@@ -11,4 +11,5 @@ module.exports = {
       options: { parser: 'markdown' },
     },
   ],
+  singleQuote: true,
 };
