@@ -1,0 +1,8 @@
+
+*
+
+!/dist/**/*
+
+!/package.json
+!/CHANGELOG.md
+!/LICENCE
