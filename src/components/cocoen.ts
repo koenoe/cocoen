@@ -170,14 +170,16 @@ export class Cocoen extends HTMLElement {
   }
 
   connectedCallback(): void {
-    if (!this.rendered) {
-      this.render();
-      this.rendered = true;
-
-      document.dispatchEvent(
-        new CustomEvent('cocoen:rendered', this.customEventPayload()),
-      );
+    if (this.rendered) {
+      return;
     }
+
+    this.render();
+    this.rendered = true;
+
+    document.dispatchEvent(
+      new CustomEvent('cocoen:rendered', this.customEventPayload()),
+    );
 
     this.container = this.shadowDOM.querySelector('#container');
     this.drag = this.shadowDOM.querySelector('#drag');
