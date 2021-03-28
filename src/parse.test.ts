@@ -1,5 +1,5 @@
-import { parse } from './parse';
 import { create } from './create';
+import { parse } from './parse';
 
 jest.mock('./create');
 

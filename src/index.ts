@@ -1,5 +1,5 @@
-import { componentName } from './config';
 import { Cocoen } from './components/cocoen';
+import { componentName } from './config';
 import { create } from './create';
 import { parse } from './parse';
 
