@@ -22,7 +22,7 @@
     "format": "bash scripts/format.sh",
     "lint": "run-p lint-es lint-ts lint-md",
     "lint-es": "eslint --ext .js,.jsx,.ts,.tsx --format=pretty ./",
-    "lint-ts": "tsc --noEmit",
+    "lint-ts": "tsc",
     "lint-md": "markdownlint '**/*.md'",
     "test": "jest --passWithNoTests",
     "test--coverage": "npm run test -- --coverage",
@@ -32,7 +32,7 @@
     "build-js": "node scripts/build.js",
     "build-js--watch": "node scripts/build.js --watch",
     "build-dts": "dts-bundle-generator -o dist/cocoen.d.ts src/index.ts --sort",
-    "build-dts--watch": "tsc --emitDeclarationOnly --watch --preserveWatchOutput",
+    "build-dts--watch": "tsc --watch --preserveWatchOutput",
     "validate": "run-p --print-label lint test build"
   },
   "dependencies": {},

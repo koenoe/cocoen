@@ -29,7 +29,7 @@ const css = `
   }
 
   #drag {
-    background: #e9e0d2;
+    background: #fff;
     bottom: 0;
     cursor: ew-resize;
     left: 50%;
@@ -40,7 +40,7 @@ const css = `
   }
 
   #drag:before {
-    border: 3px solid #e9e0d2;
+    border: 3px solid #fff;
     content: '';
     height: 30px;
     left: 50%;
