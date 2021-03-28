@@ -12,8 +12,8 @@
 
     /* Build */
     // `tsc` only used to build type declaration files (`.d.ts`)
-    "declaration": true,
-    "declarationMap": true, // Allow jumping to source file instead of 'd.ts' file
+    "declaration": false,
+    "declarationMap": false, // Allow jumping to source file instead of 'd.ts' file
 
     /* Imports */
     "moduleResolution": "node", // Yup, we are using Node

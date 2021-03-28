@@ -16,7 +16,7 @@ esbuild
   .build({
     ...options,
     globalName: 'Cocoen',
-    outfile: 'dist/index.js',
+    outfile: 'dist/cocoen.js',
   })
   .catch(() => {
     process.exit(1);
@@ -26,7 +26,7 @@ esbuild
   .build({
     ...options,
     format: 'esm',
-    outfile: 'dist/index.esm.js',
+    outfile: 'dist/cocoen.esm.js',
   })
   .catch(() => {
     process.exit(1);
