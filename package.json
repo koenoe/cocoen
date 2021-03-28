@@ -24,7 +24,7 @@
     "lint-es": "eslint --ext .js,.jsx,.ts,.tsx --format=pretty ./",
     "lint-ts": "tsc",
     "lint-md": "markdownlint '**/*.md'",
-    "test": "jest --passWithNoTests",
+    "test": "jest",
     "test--coverage": "npm run test -- --coverage",
     "test--watch": "npm run test -- --watch",
     "build": "rimraf dist && run-p build-js build-dts",
