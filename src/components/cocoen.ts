@@ -237,8 +237,6 @@ export class Cocoen extends HTMLElement {
     document.dispatchEvent(
       new CustomEvent('cocoen:resized', this.customEventPayload()),
     );
-
-    console.log('updateDimensions');
   }
 
   updateStyles(): void {
@@ -251,8 +249,6 @@ export class Cocoen extends HTMLElement {
     document.dispatchEvent(
       new CustomEvent('cocoen:updated', this.customEventPayload()),
     );
-
-    console.log('updateStyles');
   }
 
   onDragStart(event: MouseEvent | TouchEvent): void {
