@@ -1,5 +1,5 @@
-import { componentName } from './config';
 import { Cocoen } from './components/cocoen';
+import { componentName } from './config';
 
 export const create = (element: Element): Cocoen => {
   const component = document.createElement(componentName) as Cocoen;
