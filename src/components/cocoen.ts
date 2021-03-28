@@ -308,8 +308,8 @@ export class Cocoen extends HTMLElement {
     return {
       detail: {
         elementWidth: this.elementWidth,
-        rendered: this.rendered,
         openRatio: this.openRatio,
+        rendered: this.rendered,
       },
     };
   }
