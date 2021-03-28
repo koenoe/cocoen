@@ -49,6 +49,7 @@ module.exports = {
     'unicorn/prevent-abbreviations': 'off',
     // Airbnb prefers forEach
     'unicorn/no-array-for-each': 'off',
+    'unicorn/no-null': 'off',
     // It's not accurate in the monorepo style
     'import/no-extraneous-dependencies': 'off',
   },

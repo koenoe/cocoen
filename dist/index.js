@@ -1,12 +1,76 @@
-var Cocoen=(()=>{var m=Object.defineProperty;var i=(o,e)=>{for(var t in e)m(o,t,{get:e[t],enumerable:!0})};var u={};i(u,{create:()=>c,parse:()=>a});var p=`
-  div {
-    background: red;
+var Cocoen=(()=>{var c=Object.defineProperty;var m=(n,e)=>{for(var t in e)c(n,t,{get:e[t],enumerable:!0})};var g={};m(g,{create:()=>r,parse:()=>u});var s=(n,e)=>{let t;return(...i)=>{let a;return t&&clearTimeout(t),t=setTimeout(()=>{a=n(...i)},e),a}};var v=`
+  #container {
+    box-sizing: border-box;
+    cursor: pointer;
+    line-height: 0;
+    margin: 0 auto;
+    overflow: hidden;
+    padding: 0;
+    position: relative;
+    user-select: none;
   }
-`,n=class extends HTMLElement{connectedCallback(){let e=this.attachShadow({mode:"closed"});e.innerHTML=`
-      <style>${p}</style>
-      <div>
-        <slot name="before" />
+
+
+  #container *,
+  #container *:after,
+  #container *:before {
+    box-sizing: inherit;
+  }
+
+  #before {
+    height: 100%;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    width: 50%;
+  }
+
+  #drag {
+    background: #e9e0d2;
+    bottom: 0;
+    cursor: ew-resize;
+    left: 50%;
+    margin-left: -1px;
+    position: absolute;
+    top: 0;
+    width: 2px;
+  }
+
+  #drag:before {
+    border: 3px solid #e9e0d2;
+    content: '';
+    height: 30px;
+    left: 50%;
+    margin-left: -7px;
+    margin-top: -18px;
+    position: absolute;
+    top: 50%;
+    width: 14px;
+  }
+
+  ::slotted(img) {
+    object-fit: contain;
+    max-height: 100%;
+  }
+
+  ::slotted(img[slot=before]) {
+    max-width: none;
+  }
+
+  ::slotted(img[slot=after]) {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+  }
+`,o=class extends HTMLElement{constructor(){super();this.xValue=0;this.elementWidthValue=0;this.dragElementWidthValue=0;this.openRatioValue="50%";this.isDraggingValue=!1;this.rendered=!1;this.container=null,this.drag=null,this.shadowDOM=this.attachShadow({mode:"closed"}),this.onDragStartHandler=e=>this.onDragStart(e),this.onDragEndHandler=()=>this.onDragEnd(),this.onDragHandler=e=>this.onDrag(e),this.onClickHandler=e=>this.onClick(e),this.debouncedUpdateDimensions=s(()=>{this.updateDimensions()},250)}get x(){return this.xValue}set x(e){this.xValue=e,window.requestAnimationFrame(()=>{this.openRatio=this.calculateOpenRatio(this.xValue)})}get elementWidth(){return this.elementWidthValue}set elementWidth(e){this.elementWidthValue=e}get dragElementWidth(){return this.dragElementWidthValue}set dragElementWidth(e){this.dragElementWidthValue=e}get isDragging(){return this.isDraggingValue}set isDragging(e){this.isDraggingValue=e}get openRatio(){return this.openRatioValue}set openRatio(e){this.openRatioValue=e,this.updateStyles()}connectedCallback(){this.rendered||(this.render(),this.rendered=!0,document.dispatchEvent(new CustomEvent("cocoen:rendered",this.customEventPayload()))),this.container=this.shadowDOM.querySelector("#container"),this.drag=this.shadowDOM.querySelector("#drag"),this.updateDimensions(),this.container?.addEventListener("mousedown",this.onDragStartHandler),this.container?.addEventListener("touchstart",this.onDragStartHandler),this.container?.addEventListener("mousemove",this.onDragHandler),this.container?.addEventListener("touchmove",this.onDragHandler),this.container?.addEventListener("click",this.onClickHandler),window.addEventListener("resize",this.debouncedUpdateDimensions),window.addEventListener("mouseup",this.onDragEndHandler),window.addEventListener("touchend",this.onDragEndHandler)}disconnectedCallback(){this.container?.removeEventListener("mousedown",this.onDragStartHandler),this.container?.removeEventListener("touchstart",this.onDragStartHandler),this.container?.removeEventListener("mousemove",this.onDragHandler),this.container?.addEventListener("touchmove",this.onDragHandler),this.container?.removeEventListener("click",this.onClickHandler),window.removeEventListener("resize",this.debouncedUpdateDimensions),window.removeEventListener("mouseup",this.onDragEndHandler),window.removeEventListener("touchend",this.onDragEndHandler)}render(){this.shadowDOM.innerHTML=`
+      <style>${v}</style>
+      <div id="container">
+        <div id="before">
+          <slot name="before"></slot>
+        </div>
+        <slot name="after"></slot>
+        <div id="drag"></div>
       </div>
-      <slot name="after" />
-    `}disconnectedCallback(){console.log("disconnected from the DOM",this)}};var d="cocoen",r=`${d}-component`;customElements.define(r,n);var l=()=>{document.removeEventListener("DOMContentLoaded",l)};document.addEventListener("DOMContentLoaded",l);var c=o=>{let e=document.createElement(r),t=o.querySelectorAll("img")[0],s=o.querySelectorAll("img")[1];t.setAttribute("slot","before"),s.setAttribute("slot","after"),e.append(t.cloneNode(!0)),e.append(s.cloneNode(!0)),o.replaceWith(e)},a=o=>{[...o.querySelectorAll(`.${d}`)].map(t=>c(t))};return u;})();
+    `}updateDimensions(){this.container&&this.drag&&(this.elementWidth=Number.parseInt(window.getComputedStyle(this.container).width,10),this.dragElementWidth=Number.parseInt(window.getComputedStyle(this.drag).width,10)),document.dispatchEvent(new CustomEvent("cocoen:resized",this.customEventPayload()))}updateStyles(){let e=this.container?.querySelector("#before"),t=this.container?.querySelector("#drag");e.style.width=this.openRatio,t.style.left=this.openRatio,document.dispatchEvent(new CustomEvent("cocoen:updated",this.customEventPayload()))}onDragStart(e){e.preventDefault(),this.isDragging=!0}onDrag(e){e.preventDefault(),!!this.isDragging&&(this.x=this.calculateXfromEvent(e))}onDragEnd(){this.isDragging=!1}onClick(e){e.preventDefault(),this.x=this.calculateXfromEvent(e)}calculateXfromEvent(e){let t=0;e instanceof MouseEvent?t=e.clientX:e instanceof TouchEvent&&(t=e.touches[0].clientX);let i=this.container?this.container.getBoundingClientRect().left:0;return t-i}calculateOpenRatio(e){let t=e;e<0?t=this.dragElementWidth:e>=this.elementWidth&&(t=this.elementWidth-this.dragElementWidth);let i=t+this.dragElementWidth/2;return i/=this.elementWidth,`${i*100}%`}customEventPayload(){return{detail:{elementWidth:this.elementWidth,rendered:this.rendered,openRatio:this.openRatio}}}};var d="cocoen",l=`${d}-component`;customElements.define(l,o);var h=()=>{document.removeEventListener("DOMContentLoaded",h)};document.addEventListener("DOMContentLoaded",h);var r=n=>{let e=document.createElement(l),t=n.querySelectorAll("img")[0],i=n.querySelectorAll("img")[1];t.setAttribute("slot","before"),i.setAttribute("slot","after"),e.append(t.cloneNode(!0)),e.append(i.cloneNode(!0)),n.replaceWith(e)},u=n=>{[...n.querySelectorAll(`.${d}`)].map(t=>r(t))};return g;})();
 //# sourceMappingURL=index.js.map
