@@ -1,5 +1,5 @@
-import { debounce } from '../utils/debounce';
 import { componentName } from '../config';
+import { debounce } from '../utils/debounce';
 
 const css = `
   #container {
