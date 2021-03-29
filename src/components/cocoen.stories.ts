@@ -1,14 +1,14 @@
+import './cocoen';
+
 /* eslint-disable eslint-comments/disable-enable-pair */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { html } from 'lit-html';
 import { styleMap } from 'lit-html/directives/style-map';
 
 // @ts-ignore
-import before from '../../before.jpg';
-// @ts-ignore
 import after from '../../after.jpg';
-
-import './cocoen';
+// @ts-ignore
+import before from '../../before.jpg';
 
 // This default export determines where your story goes in the story list
 // eslint-disable-next-line import/no-default-export
