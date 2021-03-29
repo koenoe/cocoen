@@ -1,4 +1,5 @@
 import { debounce } from '../utils/debounce';
+import { componentName } from '../config';
 
 const css = `
   #container {
@@ -314,3 +315,6 @@ export class Cocoen extends HTMLElement {
     };
   }
 }
+
+// Define our custom Cocoen web component
+customElements.define(componentName, Cocoen);
