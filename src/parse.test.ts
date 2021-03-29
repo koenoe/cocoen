@@ -6,7 +6,7 @@ jest.mock('./create');
 describe('parse', () => {
   afterEach(() => jest.restoreAllMocks());
 
-  test('should call `create` for each .cocoen element', () => {
+  test('should call `create` for each `.cocoen` element', () => {
     const div = document.createElement('div');
 
     div.innerHTML = `
