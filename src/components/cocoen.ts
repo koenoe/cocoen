@@ -45,15 +45,15 @@ const css = `
     height: 30px;
     left: 50%;
     margin-left: -7px;
-    margin-top: -18px;
+    margin-top: -15px;
     position: absolute;
     top: 50%;
     width: 14px;
   }
 
   ::slotted(img) {
-    object-fit: contain;
     max-height: 100%;
+    object-fit: contain;
   }
 
   ::slotted(img[slot=before]) {
@@ -62,8 +62,8 @@ const css = `
 
   ::slotted(img[slot=after]) {
     display: block;
-    width: 100%;
     max-width: 100%;
+    width: 100%;
   }
 `;
 
@@ -217,7 +217,7 @@ export class Cocoen extends HTMLElement {
           <slot name="before"></slot>
         </div>
         <slot name="after"></slot>
-        <div id="drag"></div>
+        <div id="drag" part="drag"></div>
       </div>
     `;
   }
