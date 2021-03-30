@@ -2,21 +2,19 @@ import { componentName } from '../config';
 import { debounce } from '../utils/debounce';
 
 const css = `
-  #container {
+  :host {
     box-sizing: border-box;
     cursor: pointer;
-    line-height: 0;
-    margin: 0 auto;
+    display: block;
     overflow: hidden;
-    padding: 0;
     position: relative;
     user-select: none;
   }
 
 
-  #container *,
-  #container *:after,
-  #container *:before {
+  :host *,
+  :host *:after,
+  :host *:before {
     box-sizing: inherit;
   }
 
@@ -77,8 +75,6 @@ type CustomEventPayload = {
 };
 
 export class Cocoen extends HTMLElement {
-  private container: HTMLElement | null;
-
   private drag: HTMLElement | null;
 
   private shadowDOM: ShadowRoot;
@@ -108,7 +104,6 @@ export class Cocoen extends HTMLElement {
   constructor() {
     super();
 
-    this.container = null;
     this.drag = null;
     this.shadowDOM = this.attachShadow({ mode: 'closed' });
 
@@ -182,16 +177,15 @@ export class Cocoen extends HTMLElement {
       new CustomEvent('cocoen:rendered', this.customEventPayload()),
     );
 
-    this.container = this.shadowDOM.querySelector('#container');
     this.drag = this.shadowDOM.querySelector('#drag');
 
     this.updateDimensions();
 
-    this.container?.addEventListener('mousedown', this.onDragStartHandler);
-    this.container?.addEventListener('touchstart', this.onDragStartHandler);
-    this.container?.addEventListener('mousemove', this.onDragHandler);
-    this.container?.addEventListener('touchmove', this.onDragHandler);
-    this.container?.addEventListener('click', this.onClickHandler);
+    this.addEventListener('mousedown', this.onDragStartHandler);
+    this.addEventListener('touchstart', this.onDragStartHandler);
+    this.addEventListener('mousemove', this.onDragHandler);
+    this.addEventListener('touchmove', this.onDragHandler);
+    this.addEventListener('click', this.onClickHandler);
 
     window.addEventListener('resize', this.debouncedUpdateDimensions);
     window.addEventListener('mouseup', this.onDragEndHandler);
@@ -199,11 +193,11 @@ export class Cocoen extends HTMLElement {
   }
 
   disconnectedCallback(): void {
-    this.container?.removeEventListener('mousedown', this.onDragStartHandler);
-    this.container?.removeEventListener('touchstart', this.onDragStartHandler);
-    this.container?.removeEventListener('mousemove', this.onDragHandler);
-    this.container?.addEventListener('touchmove', this.onDragHandler);
-    this.container?.removeEventListener('click', this.onClickHandler);
+    this.removeEventListener('mousedown', this.onDragStartHandler);
+    this.removeEventListener('touchstart', this.onDragStartHandler);
+    this.removeEventListener('mousemove', this.onDragHandler);
+    this.removeEventListener('touchmove', this.onDragHandler);
+    this.removeEventListener('click', this.onClickHandler);
 
     window.removeEventListener('resize', this.debouncedUpdateDimensions);
     window.removeEventListener('mouseup', this.onDragEndHandler);
@@ -213,22 +207,21 @@ export class Cocoen extends HTMLElement {
   render(): void {
     this.shadowDOM.innerHTML = `
       <style>${css}</style>
-      <div id="container">
-        <div id="before">
-          <slot name="before"></slot>
-        </div>
-        <slot name="after"></slot>
-        <div id="drag" part="drag"></div>
+      <div id="before">
+        <slot name="before"></slot>
       </div>
+      <slot name="after"></slot>
+      <div id="drag" part="drag"></div>
     `;
   }
 
   updateDimensions(): void {
-    if (this.container && this.drag) {
-      this.elementWidth = Number.parseInt(
-        window.getComputedStyle(this.container).width,
-        10,
-      );
+    this.elementWidth = Number.parseInt(
+      window.getComputedStyle(this).width,
+      10,
+    );
+
+    if (this.drag) {
       this.dragElementWidth = Number.parseInt(
         window.getComputedStyle(this.drag).width,
         10,
@@ -241,8 +234,8 @@ export class Cocoen extends HTMLElement {
   }
 
   updateStyles(): void {
-    const before = this.container?.querySelector('#before') as HTMLElement;
-    const drag = this.container?.querySelector('#drag') as HTMLElement;
+    const before = this.shadowDOM.querySelector('#before') as HTMLElement;
+    const drag = this.shadowDOM.querySelector('#drag') as HTMLElement;
 
     before.style.width = this.openRatio;
     drag.style.left = this.openRatio;
@@ -286,9 +279,7 @@ export class Cocoen extends HTMLElement {
       clientX = event.touches[0].clientX;
     }
 
-    const offsetLeft = this.container
-      ? this.container.getBoundingClientRect().left
-      : 0;
+    const offsetLeft = this.getBoundingClientRect().left || 0;
     return clientX - offsetLeft;
   }
 
