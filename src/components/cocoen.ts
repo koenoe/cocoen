@@ -2,7 +2,7 @@ import { componentName } from '../config';
 import { debounce } from '../utils/debounce';
 import { calculateXfromEvent } from '../utils/calculate-x-from-event';
 import { calculateOpenRatio } from '../utils/calculate-open-ratio';
-import { elementWidth } from '../utils/element-width';
+import { calculateElementWidth } from '../utils/calculate-element-width';
 import { formatPercentageAsString } from '../utils/format-percentage-as-string';
 
 const css = `
@@ -224,10 +224,10 @@ export class Cocoen extends HTMLElement {
   }
 
   updateDimensions(): void {
-    this.elementWidth = elementWidth(this);
+    this.elementWidth = calculateElementWidth(this);
 
     if (this.drag) {
-      this.dragElementWidth = elementWidth(this.drag);
+      this.dragElementWidth = calculateElementWidth(this.drag);
     }
 
     document.dispatchEvent(
