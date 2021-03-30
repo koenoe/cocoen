@@ -31,7 +31,7 @@
     "build--watch": "run-p build-js--watch build-dts--watch",
     "build-js": "node scripts/build.js",
     "build-js--watch": "node scripts/build.js --watch",
-    "build-dts": "dts-bundle-generator -o dist/cocoen.d.ts src/index.ts --sort",
+    "build-dts": "dts-bundle-generator --config ./dts-bundle-generator.config.js",
     "build-dts--watch": "tsc --watch --preserveWatchOutput",
     "validate": "run-p --print-label lint test build",
     "storybook": "start-storybook -p 6006",

@@ -1,5 +1,9 @@
 import { componentName } from '../config';
 import { debounce } from '../utils/debounce';
+import { calculateXfromEvent } from '../utils/calculate-x-from-event';
+import { calculateOpenRatio } from '../utils/calculate-open-ratio';
+import { elementWidth } from '../utils/element-width';
+import { formatPercentageAsString } from '../utils/format-percentage-as-string';
 
 const css = `
   :host {
@@ -69,7 +73,7 @@ const css = `
 type CustomEventPayload = {
   detail: {
     elementWidth: number;
-    openRatio: string;
+    openRatio: number;
     rendered: boolean;
   };
 };
@@ -95,7 +99,7 @@ export class Cocoen extends HTMLElement {
 
   private dragElementWidthValue = 0;
 
-  private openRatioValue = '50%';
+  private openRatioValue = 50;
 
   private isDraggingValue = false;
 
@@ -127,7 +131,11 @@ export class Cocoen extends HTMLElement {
     this.xValue = value;
 
     window.requestAnimationFrame(() => {
-      this.openRatio = this.calculateOpenRatio(this.xValue);
+      this.openRatio = calculateOpenRatio({
+        x: this.xValue,
+        dragElementWidth: this.dragElementWidth,
+        hostElementWidth: this.elementWidth,
+      });
     });
   }
 
@@ -155,11 +163,11 @@ export class Cocoen extends HTMLElement {
     this.isDraggingValue = value;
   }
 
-  get openRatio(): string {
+  get openRatio(): number {
     return this.openRatioValue;
   }
 
-  set openRatio(value: string) {
+  set openRatio(value: number) {
     this.openRatioValue = value;
 
     this.updateStyles();
@@ -216,16 +224,10 @@ export class Cocoen extends HTMLElement {
   }
 
   updateDimensions(): void {
-    this.elementWidth = Number.parseInt(
-      window.getComputedStyle(this).width,
-      10,
-    );
+    this.elementWidth = elementWidth(this);
 
     if (this.drag) {
-      this.dragElementWidth = Number.parseInt(
-        window.getComputedStyle(this.drag).width,
-        10,
-      );
+      this.dragElementWidth = elementWidth(this.drag);
     }
 
     document.dispatchEvent(
@@ -236,9 +238,10 @@ export class Cocoen extends HTMLElement {
   updateStyles(): void {
     const before = this.shadowDOM.querySelector('#before') as HTMLElement;
     const drag = this.shadowDOM.querySelector('#drag') as HTMLElement;
+    const openRatio = formatPercentageAsString(this.openRatio);
 
-    before.style.width = this.openRatio;
-    drag.style.left = this.openRatio;
+    before.style.width = openRatio;
+    drag.style.left = openRatio;
 
     document.dispatchEvent(
       new CustomEvent('cocoen:updated', this.customEventPayload()),
@@ -258,7 +261,7 @@ export class Cocoen extends HTMLElement {
       return;
     }
 
-    this.x = this.calculateXfromEvent(event);
+    this.x = calculateXfromEvent(event, this);
   }
 
   onDragEnd(): void {
@@ -268,19 +271,7 @@ export class Cocoen extends HTMLElement {
   onClick(event: MouseEvent): void {
     event.preventDefault();
 
-    this.x = this.calculateXfromEvent(event);
-  }
-
-  calculateXfromEvent(event: MouseEvent | TouchEvent): number {
-    let clientX = 0;
-    if (event instanceof MouseEvent) {
-      clientX = event.clientX;
-    } else if (event instanceof TouchEvent) {
-      clientX = event.touches[0].clientX;
-    }
-
-    const offsetLeft = this.getBoundingClientRect().left || 0;
-    return clientX - offsetLeft;
+    this.x = calculateXfromEvent(event, this);
   }
 
   calculateOpenRatio(activeX: number): string {
