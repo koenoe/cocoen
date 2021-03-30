@@ -3,8 +3,8 @@ import './cocoen';
 /* eslint-disable eslint-comments/disable-enable-pair */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { html } from 'lit-html';
-import { styleMap } from 'lit-html/directives/style-map';
 import { ifDefined } from 'lit-html/directives/if-defined';
+import { styleMap } from 'lit-html/directives/style-map';
 
 // @ts-ignore
 import after from '../../after.jpg';
