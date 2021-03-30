@@ -1,8 +1,8 @@
 import { componentName } from '../config';
-import { debounce } from '../utils/debounce';
-import { calculateXfromEvent } from '../utils/calculate-x-from-event';
 import { calculateOpenRatio } from '../utils/calculate-open-ratio';
 import { calculateElementWidth } from '../utils/calculate-element-width';
+import { calculateXfromEvent } from '../utils/calculate-x-from-event';
+import { debounce } from '../utils/debounce';
 import { formatPercentageAsString } from '../utils/format-percentage-as-string';
 
 const css = `
