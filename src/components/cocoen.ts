@@ -1,6 +1,6 @@
 import { componentName } from '../config';
-import { calculateOpenRatio } from '../utils/calculate-open-ratio';
 import { calculateElementWidth } from '../utils/calculate-element-width';
+import { calculateOpenRatio } from '../utils/calculate-open-ratio';
 import { calculateXfromEvent } from '../utils/calculate-x-from-event';
 import { debounce } from '../utils/debounce';
 import { formatPercentageAsString } from '../utils/format-percentage-as-string';
