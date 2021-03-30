@@ -4,6 +4,7 @@ import './cocoen';
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { html } from 'lit-html';
 import { styleMap } from 'lit-html/directives/style-map';
+import { ifDefined } from 'lit-html/directives/if-defined';
 
 // @ts-ignore
 import after from '../../after.jpg';
@@ -14,13 +15,11 @@ import before from '../../before.jpg';
 // eslint-disable-next-line import/no-default-export
 export default {
   title: 'Cocoen',
-  argTypes: {
-    color: { control: 'color' },
-  },
   parameters: {
     actions: {
       handles: [
-        'cocoen-component:rendered',
+        'cocoen-component:connected',
+        'cocoen-component:disconnected',
         'cocoen-component:resized',
         'cocoen-component:updated',
       ],
@@ -43,7 +42,10 @@ const Cocoen = ({ start, color }: Args) => {
 
   return html`
     <div style=${styleMap(styles)}>
-      <cocoen-component start=${start} color=${color}>
+      <cocoen-component
+        color=${ifDefined(color || undefined)}
+        start=${ifDefined(start || undefined)}
+      >
         <img src=${before} slot="before" alt="" />
         <img src=${after} slot="after" alt="" />
       </cocoen-component>
@@ -53,7 +55,17 @@ const Cocoen = ({ start, color }: Args) => {
 
 export const Default = Cocoen.bind({});
 // @ts-ignore
-Default.args = {
+Default.parameters = {
+  controls: { hideNoControlsWarning: true },
+};
+
+export const Custom = Cocoen.bind({});
+// @ts-ignore
+Custom.args = {
   start: 75,
-  color: '#fff',
+  color: '#ff0000',
+};
+// @ts-ignore
+Custom.argTypes = {
+  color: { control: 'color' },
 };

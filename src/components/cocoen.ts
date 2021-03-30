@@ -220,7 +220,7 @@ export class Cocoen extends HTMLElement {
     this.rendered = true;
 
     this.dispatchEvent(
-      new CustomEvent(`${componentName}:rendered`, this.customEventPayload()),
+      new CustomEvent(`${componentName}:connected`, this.customEventPayload()),
     );
 
     this.drag = this.shadowDOM.querySelector('#drag');
@@ -249,6 +249,13 @@ export class Cocoen extends HTMLElement {
   }
 
   disconnectedCallback(): void {
+    this.dispatchEvent(
+      new CustomEvent(
+        `${componentName}:disconnected`,
+        this.customEventPayload(),
+      ),
+    );
+
     this.removeEventListener('mousedown', this.onDragStartHandler);
     this.removeEventListener('touchstart', this.onDragStartHandler);
     this.removeEventListener('mousemove', this.onDragHandler);
