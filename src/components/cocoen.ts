@@ -15,7 +15,6 @@ const css = `
     user-select: none;
   }
 
-
   :host *,
   :host *:after,
   :host *:before {
@@ -32,7 +31,7 @@ const css = `
   }
 
   #drag {
-    background: #fff;
+    background: var(--color, #fff);
     bottom: 0;
     cursor: ew-resize;
     left: 50%;
@@ -43,7 +42,7 @@ const css = `
   }
 
   #drag:before {
-    border: 3px solid #fff;
+    border: 3px solid var(--color, #fff);
     content: '';
     height: 30px;
     left: 50%;
@@ -71,6 +70,8 @@ const css = `
 `;
 
 type CustomEventPayload = {
+  bubbles: boolean;
+  composed: boolean;
   detail: {
     elementWidth: number;
     openRatio: number;
@@ -83,27 +84,29 @@ export class Cocoen extends HTMLElement {
 
   private shadowDOM: ShadowRoot;
 
-  private onDragStartHandler: (event: MouseEvent | TouchEvent) => void;
+  private debouncedUpdateDimensions: () => void;
+
+  private onClickHandler: (event: MouseEvent) => void;
 
   private onDragEndHandler: (event: MouseEvent | TouchEvent) => void;
 
   private onDragHandler: (event: MouseEvent | TouchEvent) => void;
 
-  private onClickHandler: (event: MouseEvent) => void;
+  private onDragStartHandler: (event: MouseEvent | TouchEvent) => void;
 
-  private debouncedUpdateDimensions: () => void;
-
-  private xValue = 0;
-
-  private elementWidthValue = 0;
+  private colorValue = '#fff';
 
   private dragElementWidthValue = 0;
 
-  private openRatioValue = 50;
+  private elementWidthValue = 0;
 
   private isDraggingValue = false;
 
+  private openRatioValue = 50;
+
   private rendered = false;
+
+  private xValue = 0;
 
   constructor() {
     super();
@@ -111,8 +114,7 @@ export class Cocoen extends HTMLElement {
     this.drag = null;
     this.shadowDOM = this.attachShadow({ mode: 'closed' });
 
-    this.onDragStartHandler = (event: MouseEvent | TouchEvent) =>
-      this.onDragStart(event);
+    this.onDragStartHandler = () => this.onDragStart();
 
     this.onDragEndHandler = () => this.onDragEnd();
     this.onDragHandler = (event: MouseEvent | TouchEvent) => this.onDrag(event);
@@ -170,7 +172,43 @@ export class Cocoen extends HTMLElement {
   set openRatio(value: number) {
     this.openRatioValue = value;
 
-    this.updateStyles();
+    window.requestAnimationFrame(() => {
+      this.updateStyles();
+    });
+  }
+
+  get color(): string {
+    return this.colorValue;
+  }
+
+  set color(value: string) {
+    this.colorValue = value;
+
+    window.requestAnimationFrame(() => {
+      this.style.setProperty('--color', this.color);
+    });
+  }
+
+  static get observedAttributes(): Array<string> {
+    return ['start', 'color'];
+  }
+
+  attributeChangedCallback(
+    name: string,
+    oldValue: string,
+    newValue: string,
+  ): void {
+    if (oldValue === newValue) {
+      return;
+    }
+
+    if (name === 'start') {
+      this.openRatio = Number.parseInt(String(this.getAttribute('start')), 10);
+    }
+
+    if (name === 'color') {
+      this.color = String(this.getAttribute('color'));
+    }
   }
 
   connectedCallback(): void {
@@ -181,23 +219,33 @@ export class Cocoen extends HTMLElement {
     this.render();
     this.rendered = true;
 
-    document.dispatchEvent(
-      new CustomEvent('cocoen:rendered', this.customEventPayload()),
+    this.dispatchEvent(
+      new CustomEvent(`${componentName}:rendered`, this.customEventPayload()),
     );
 
     this.drag = this.shadowDOM.querySelector('#drag');
 
     this.updateDimensions();
 
-    this.addEventListener('mousedown', this.onDragStartHandler);
-    this.addEventListener('touchstart', this.onDragStartHandler);
-    this.addEventListener('mousemove', this.onDragHandler);
-    this.addEventListener('touchmove', this.onDragHandler);
-    this.addEventListener('click', this.onClickHandler);
+    this.addEventListener('mousedown', this.onDragStartHandler, {
+      passive: true,
+    });
+    this.addEventListener('touchstart', this.onDragStartHandler, {
+      passive: true,
+    });
+    this.addEventListener('mousemove', this.onDragHandler, { passive: true });
+    this.addEventListener('touchmove', this.onDragHandler, { passive: true });
+    this.addEventListener('click', this.onClickHandler, { passive: true });
 
-    window.addEventListener('resize', this.debouncedUpdateDimensions);
-    window.addEventListener('mouseup', this.onDragEndHandler);
-    window.addEventListener('touchend', this.onDragEndHandler);
+    window.addEventListener('resize', this.debouncedUpdateDimensions, {
+      passive: true,
+    });
+    window.addEventListener('mouseup', this.onDragEndHandler, {
+      passive: true,
+    });
+    window.addEventListener('touchend', this.onDragEndHandler, {
+      passive: true,
+    });
   }
 
   disconnectedCallback(): void {
@@ -230,8 +278,8 @@ export class Cocoen extends HTMLElement {
       this.dragElementWidth = calculateElementWidth(this.drag);
     }
 
-    document.dispatchEvent(
-      new CustomEvent('cocoen:resized', this.customEventPayload()),
+    this.dispatchEvent(
+      new CustomEvent(`${componentName}:resized`, this.customEventPayload()),
     );
   }
 
@@ -243,20 +291,16 @@ export class Cocoen extends HTMLElement {
     before.style.width = openRatio;
     drag.style.left = openRatio;
 
-    document.dispatchEvent(
-      new CustomEvent('cocoen:updated', this.customEventPayload()),
+    this.dispatchEvent(
+      new CustomEvent(`${componentName}:updated`, this.customEventPayload()),
     );
   }
 
-  onDragStart(event: MouseEvent | TouchEvent): void {
-    event.preventDefault();
-
+  onDragStart(): void {
     this.isDragging = true;
   }
 
   onDrag(event: MouseEvent | TouchEvent): void {
-    event.preventDefault();
-
     if (!this.isDragging) {
       return;
     }
@@ -269,8 +313,6 @@ export class Cocoen extends HTMLElement {
   }
 
   onClick(event: MouseEvent): void {
-    event.preventDefault();
-
     this.x = calculateXfromEvent(event, this);
   }
 
@@ -289,6 +331,8 @@ export class Cocoen extends HTMLElement {
 
   customEventPayload(): CustomEventPayload {
     return {
+      bubbles: true,
+      composed: true,
       detail: {
         elementWidth: this.elementWidth,
         openRatio: this.openRatio,
