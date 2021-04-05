@@ -8,18 +8,25 @@ import { formatPercentageAsString } from '../utils/format-percentage-as-string';
 const css = `
   :host {
     box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
     cursor: pointer;
     display: block;
     overflow: hidden;
     position: relative;
     user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -ms-user-select: none;
   }
 
   :host *,
   :host *:after,
   :host *:before {
     box-sizing: inherit;
-    user-select: none;
+    -moz-box-sizing: inherit;
+    -webkit-box-sizing: inherit;
   }
 
   #before {
@@ -57,7 +64,6 @@ const css = `
   ::slotted(img) {
     max-height: 100%;
     object-fit: contain;
-    user-select: none;
   }
 
   ::slotted(img[slot=before]) {
