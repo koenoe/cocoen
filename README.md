@@ -8,7 +8,7 @@ Touch-enabled before/after slider. Inspired by [before-after.js](https://github.
 
 ## Quick start
 
-[Demo](https://koenromers.com/cocoen/demo.html)
+[Demo](https://koenromers.com/cocoen/index.html)
 
 ## Install
 
@@ -16,6 +16,31 @@ Install with NPM
 
 ```bash
 npm install cocoen --save
+```
+
+Get it from CDN
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cocoen from CDN</title>
+  </head>
+  <body>
+    <div class="cocoen">
+      <img src="img/before.jpg" alt="" />
+      <img src="img/after.jpg" alt="" />
+    </div>
+
+    <!-- Load Cocoen library -->
+    <script src="https://unpkg.com/cocoen/dist/cocoen.js"></script>
+
+    <!-- Turns all `.cocoen` elements into Cocoens -->
+    <script>
+      Cocoen.parse(document.body);
+    </script>
+  </body>
+</html>
 ```
 
 Or download the [latest release](https://github.com/koenoe/cocoen/releases).
@@ -31,26 +56,16 @@ Only the class `cocoen` is mandatory to apply proper default styles:
 </div>
 ```
 
-Include the Cocoen stylesheet in your page:
-
-```html
-<link rel="stylesheet" href="css/cocoen.min.css" />
-```
-
-### Javascript
-
-Include the `cocoen.min.js` script in your page, and then:
+Include the `cocoen.js` script in your page, and then:
 
 ```js
-new Cocoen(document.querySelector('.cocoen'));
+Cocoen.create(document.querySelector('.cocoen'));
 ```
 
 Multiple Cocoens in one page:
 
 ```js
-document.querySelectorAll('.cocoen').forEach(function (element) {
-  new Cocoen(element);
-});
+Cocoen.parse(document.body);
 ```
 
 ## License
