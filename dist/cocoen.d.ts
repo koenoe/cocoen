@@ -6,23 +6,28 @@ export declare type CustomEventPayload = {
 	detail: {
 		elementWidth: number;
 		openRatio: number;
-		rendered: boolean;
+		isRendered: boolean;
+		isVisible: boolean;
 	};
 };
 declare class Cocoen extends HTMLElement {
 	private drag;
+	private intersectionObserver;
 	private shadowDOM;
 	private debouncedUpdateDimensions;
 	private onClickHandler;
 	private onDragEndHandler;
 	private onDragHandler;
 	private onDragStartHandler;
+	private onIntersectionHandler;
+	private shouldAnimateTo;
 	private colorValue;
 	private dragElementWidthValue;
 	private elementWidthValue;
 	private isDraggingValue;
 	private openRatioValue;
-	private rendered;
+	private isRendered;
+	private isVisible;
 	private xValue;
 	constructor();
 	get x(): number;
@@ -48,10 +53,11 @@ declare class Cocoen extends HTMLElement {
 	onDrag(event: MouseEvent | TouchEvent): void;
 	onDragEnd(): void;
 	onClick(event: MouseEvent): void;
+	onIntersection(entries: IntersectionObserverEntry[], observer: IntersectionObserver): void;
 	calculateOpenRatio(activeX: number): string;
 	customEventPayload(): CustomEventPayload;
 }
-export declare const create: (element: Element) => Cocoen;
+export declare const create: (element: HTMLElement) => Cocoen;
 export declare const parse: (context: HTMLElement) => void;
 
 export {};
