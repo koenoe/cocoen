@@ -2,10 +2,9 @@
 
 ### [3.0.2](https://www.github.com/koenoe/cocoen/compare/v3.0.1...v3.0.2) (2021-04-05)
 
-
 ### Bug Fixes
 
-* linting md ([507c8b2](https://www.github.com/koenoe/cocoen/commit/507c8b2b57baecb121a9df31a696eebc553f4689))
+- linting md ([507c8b2](https://www.github.com/koenoe/cocoen/commit/507c8b2b57baecb121a9df31a696eebc553f4689))
 
 ### [3.0.1](https://www.github.com/koenoe/cocoen/compare/v3.0.0...v3.0.1) (2021-04-05)
 
