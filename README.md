@@ -68,6 +68,23 @@ Multiple Cocoens in one page:
 Cocoen.parse(document.body);
 ```
 
+### Options
+
+| Option  | Type   | Description                                                       |
+| ------- | ------ | ----------------------------------------------------------------- |
+| `start` | String | Default: "50". <br> The start position of Cocoen as a percentage. |
+| `color` | String | Default: "#fff". <br> Color of drag control                       |
+
+### Events
+
+| Option                          | Description                              |
+| ------------------------------- | ---------------------------------------- |
+| `cocoen-component:connected`    | Fires when Cocoen mounts                 |
+| `cocoen-component:disconnected` | Fires when Cocoen unmounts               |
+| `cocoen-component:resized`      | Fires when Cocoen dimensions are updated |
+| `cocoen-component:updated`      | Fires when Cocoen is updated             |
+| `cocoen-component:visible`      | Fires when Cocoen is in viewport         |
+
 ## License
 
 The code and the documentation are released under the [MIT License](LICENSE).
