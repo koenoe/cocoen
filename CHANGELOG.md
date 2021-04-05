@@ -2,10 +2,9 @@
 
 ### [3.0.1](https://www.github.com/koenoe/cocoen/compare/v3.0.0...v3.0.1) (2021-04-05)
 
-
 ### Bug Fixes
 
-* **web-component:** fix selection of cocoen in Safari ([e4e5d7d](https://www.github.com/koenoe/cocoen/commit/e4e5d7d26c3e3ec612e7ec823f3564f78ca7c694))
+- **web-component:** fix selection of cocoen in Safari ([e4e5d7d](https://www.github.com/koenoe/cocoen/commit/e4e5d7d26c3e3ec612e7ec823f3564f78ca7c694))
 
 ## [3.0.0](https://www.github.com/koenoe/cocoen/compare/v2.0.5...v3.0.0) (2021-04-05)
 

@@ -10,3 +10,6 @@ no-trailing-punctuation:
 # Prettier handles these:
 list-marker-space: false
 no-multiple-blanks: false
+
+ul-style: false
+heading-increment: false
