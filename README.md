@@ -70,10 +70,10 @@ Cocoen.parse(document.body);
 
 ### Options
 
-| Option  | Type   | Description                                                    |
-| ------- | ------ | -------------------------------------------------------------- |
-| `start` | String | Default: "50". \ The start position of Cocoen as a percentage. |
-| `color` | String | Default: "#fff". \ Color of drag control                       |
+| Option  | Type   | Description                                                  |
+| ------- | ------ | ------------------------------------------------------------ |
+| `start` | String | Default: "50". The start position of Cocoen as a percentage. |
+| `color` | String | Default: "#fff". Color of drag control                       |
 
 ### Events
 

@@ -19,6 +19,7 @@ const css = `
   :host *:after,
   :host *:before {
     box-sizing: inherit;
+    user-select: none;
   }
 
   #before {
@@ -56,6 +57,7 @@ const css = `
   ::slotted(img) {
     max-height: 100%;
     object-fit: contain;
+    user-select: none;
   }
 
   ::slotted(img[slot=before]) {
