@@ -75,12 +75,15 @@ type CustomEventPayload = {
   detail: {
     elementWidth: number;
     openRatio: number;
-    rendered: boolean;
+    isRendered: boolean;
+    isVisible: boolean;
   };
 };
 
 export class Cocoen extends HTMLElement {
   private drag: HTMLElement | null;
+
+  private intersectionObserver: IntersectionObserver;
 
   private shadowDOM: ShadowRoot;
 
@@ -94,6 +97,10 @@ export class Cocoen extends HTMLElement {
 
   private onDragStartHandler: (event: MouseEvent | TouchEvent) => void;
 
+  private onIntersectionHandler: IntersectionObserverCallback;
+
+  private shouldAnimateTo: number | undefined;
+
   private colorValue = '#fff';
 
   private dragElementWidthValue = 0;
@@ -104,7 +111,9 @@ export class Cocoen extends HTMLElement {
 
   private openRatioValue = 50;
 
-  private rendered = false;
+  private isRendered = false;
+
+  private isVisible = false;
 
   private xValue = 0;
 
@@ -119,10 +128,23 @@ export class Cocoen extends HTMLElement {
     this.onDragEndHandler = () => this.onDragEnd();
     this.onDragHandler = (event: MouseEvent | TouchEvent) => this.onDrag(event);
     this.onClickHandler = (event: MouseEvent) => this.onClick(event);
+    this.onIntersectionHandler = (
+      entries: IntersectionObserverEntry[],
+      observer: IntersectionObserver,
+    ) => this.onIntersection(entries, observer);
 
     this.debouncedUpdateDimensions = debounce(() => {
       this.updateDimensions();
     }, 250);
+
+    this.intersectionObserver = new IntersectionObserver(
+      this.onIntersectionHandler,
+      {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0,
+      },
+    );
   }
 
   get x(): number {
@@ -203,7 +225,13 @@ export class Cocoen extends HTMLElement {
     }
 
     if (name === 'start') {
-      this.openRatio = Number.parseInt(String(this.getAttribute('start')), 10);
+      this.shouldAnimateTo = Number.parseInt(
+        String(this.getAttribute('start')),
+        10,
+      );
+      if (this.isVisible) {
+        this.openRatio = this.shouldAnimateTo;
+      }
     }
 
     if (name === 'color') {
@@ -212,12 +240,12 @@ export class Cocoen extends HTMLElement {
   }
 
   connectedCallback(): void {
-    if (this.rendered) {
+    if (this.isRendered) {
       return;
     }
 
     this.render();
-    this.rendered = true;
+    this.isRendered = true;
 
     this.dispatchEvent(
       new CustomEvent(`${componentName}:connected`, this.customEventPayload()),
@@ -246,6 +274,8 @@ export class Cocoen extends HTMLElement {
     window.addEventListener('touchend', this.onDragEndHandler, {
       passive: true,
     });
+
+    this.intersectionObserver.observe(this);
   }
 
   disconnectedCallback(): void {
@@ -265,6 +295,8 @@ export class Cocoen extends HTMLElement {
     window.removeEventListener('resize', this.debouncedUpdateDimensions);
     window.removeEventListener('mouseup', this.onDragEndHandler);
     window.removeEventListener('touchend', this.onDragEndHandler);
+
+    this.intersectionObserver.unobserve(this);
   }
 
   render(): void {
@@ -295,6 +327,14 @@ export class Cocoen extends HTMLElement {
     const drag = this.shadowDOM.querySelector('#drag') as HTMLElement;
     const openRatio = formatPercentageAsString(this.openRatio);
 
+    if (this.shouldAnimateTo) {
+      before.style.transition = 'width .75s';
+      drag.style.transition = 'left .75s';
+    } else {
+      before.style.transition = 'none';
+      drag.style.transition = 'none';
+    }
+
     before.style.width = openRatio;
     drag.style.left = openRatio;
 
@@ -305,6 +345,7 @@ export class Cocoen extends HTMLElement {
 
   onDragStart(): void {
     this.isDragging = true;
+    this.shouldAnimateTo = 0;
   }
 
   onDrag(event: MouseEvent | TouchEvent): void {
@@ -320,7 +361,29 @@ export class Cocoen extends HTMLElement {
   }
 
   onClick(event: MouseEvent): void {
+    this.shouldAnimateTo = 0;
     this.x = calculateXfromEvent(event, this);
+  }
+
+  onIntersection(
+    entries: IntersectionObserverEntry[],
+    observer: IntersectionObserver,
+  ): void {
+    entries.forEach((entry: IntersectionObserverEntry) => {
+      if (entry.isIntersecting) {
+        this.dispatchEvent(
+          new CustomEvent(
+            `${componentName}:visible`,
+            this.customEventPayload(),
+          ),
+        );
+        if (this.shouldAnimateTo) {
+          this.openRatio = this.shouldAnimateTo;
+        }
+        observer.unobserve(this);
+        this.isVisible = true;
+      }
+    });
   }
 
   calculateOpenRatio(activeX: number): string {
@@ -343,7 +406,8 @@ export class Cocoen extends HTMLElement {
       detail: {
         elementWidth: this.elementWidth,
         openRatio: this.openRatio,
-        rendered: this.rendered,
+        isRendered: this.isRendered,
+        isVisible: this.isVisible,
       },
     };
   }
