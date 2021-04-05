@@ -1,5 +1,12 @@
 # Changelog
 
+### [3.0.3](https://www.github.com/koenoe/cocoen/compare/v3.0.2...v3.0.3) (2021-04-05)
+
+
+### Bug Fixes
+
+* add missing styles safari and firefox ([8d5eec8](https://www.github.com/koenoe/cocoen/commit/8d5eec83ba968f73b636b87c4ab814451cb30b53))
+
 ### [3.0.2](https://www.github.com/koenoe/cocoen/compare/v3.0.1...v3.0.2) (2021-04-05)
 
 ### Bug Fixes
