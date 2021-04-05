@@ -13,3 +13,4 @@ no-multiple-blanks: false
 
 ul-style: false
 heading-increment: false
+no-duplicate-header: false

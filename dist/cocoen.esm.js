@@ -1,17 +1,25 @@
 var s="cocoen",o=`${s}-component`;var a=n=>Number.parseInt(window.getComputedStyle(n).width,10);var h=({dragElementWidth:n,hostElementWidth:e,x:t})=>{let i=t;t<0?i=n:t>=e&&(i=e-n);let r=i+n/2;return r/=e,r*100};var l=(n,e)=>{let t=0;n instanceof MouseEvent?t=n.clientX:n instanceof TouchEvent&&(t=n.touches[0].clientX);let i=e?.getBoundingClientRect().left||0;return t-i};var u=(n,e)=>{let t;return(...i)=>{let r;return t&&clearTimeout(t),t=setTimeout(()=>{r=n(...i)},e),r}};var c=n=>`${n}%`;var p=`
   :host {
     box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
     cursor: pointer;
     display: block;
     overflow: hidden;
     position: relative;
     user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -ms-user-select: none;
   }
 
   :host *,
   :host *:after,
   :host *:before {
     box-sizing: inherit;
+    -moz-box-sizing: inherit;
+    -webkit-box-sizing: inherit;
   }
 
   #before {
