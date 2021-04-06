@@ -56,10 +56,13 @@ declare class Cocoen extends HTMLElement {
 	onClick(event: MouseEvent): void;
 	onContextMenu(): void;
 	onIntersection(entries: IntersectionObserverEntry[], observer: IntersectionObserver): void;
-	calculateOpenRatio(activeX: number): string;
 	customEventPayload(): CustomEventPayload;
 }
-export declare const create: (element: HTMLElement) => Cocoen;
+export declare type Options = {
+	start?: number;
+	color?: string;
+};
+export declare const create: (element: HTMLElement, options?: Options | undefined) => Cocoen;
 export declare const parse: (context: HTMLElement) => void;
 
 export {};

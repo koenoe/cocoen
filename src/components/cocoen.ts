@@ -406,19 +406,6 @@ export class Cocoen extends HTMLElement {
     });
   }
 
-  calculateOpenRatio(activeX: number): string {
-    let value = activeX;
-    if (activeX < 0) {
-      value = this.dragElementWidth;
-    } else if (activeX >= this.elementWidth) {
-      value = this.elementWidth - this.dragElementWidth;
-    }
-
-    let ratio = value + this.dragElementWidth / 2;
-    ratio /= this.elementWidth;
-    return `${ratio * 100}%`;
-  }
-
   customEventPayload(): CustomEventPayload {
     return {
       bubbles: true,
