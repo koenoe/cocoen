@@ -16,6 +16,7 @@ declare class Cocoen extends HTMLElement {
 	private shadowDOM;
 	private debouncedUpdateDimensions;
 	private onClickHandler;
+	private onContextMenuHandler;
 	private onDragEndHandler;
 	private onDragHandler;
 	private onDragStartHandler;
@@ -53,6 +54,7 @@ declare class Cocoen extends HTMLElement {
 	onDrag(event: MouseEvent | TouchEvent): void;
 	onDragEnd(): void;
 	onClick(event: MouseEvent): void;
+	onContextMenu(): void;
 	onIntersection(entries: IntersectionObserverEntry[], observer: IntersectionObserver): void;
 	calculateOpenRatio(activeX: number): string;
 	customEventPayload(): CustomEventPayload;

@@ -100,6 +100,8 @@ export class Cocoen extends HTMLElement {
 
   private onClickHandler: (event: MouseEvent) => void;
 
+  private onContextMenuHandler: () => void;
+
   private onDragEndHandler: (event: MouseEvent | TouchEvent) => void;
 
   private onDragHandler: (event: MouseEvent | TouchEvent) => void;
@@ -137,6 +139,7 @@ export class Cocoen extends HTMLElement {
     this.onDragEndHandler = () => this.onDragEnd();
     this.onDragHandler = (event: MouseEvent | TouchEvent) => this.onDrag(event);
     this.onClickHandler = (event: MouseEvent) => this.onClick(event);
+    this.onContextMenuHandler = () => this.onContextMenu();
     this.onIntersectionHandler = (
       entries: IntersectionObserverEntry[],
       observer: IntersectionObserver,
@@ -273,6 +276,9 @@ export class Cocoen extends HTMLElement {
     this.addEventListener('mousemove', this.onDragHandler, { passive: true });
     this.addEventListener('touchmove', this.onDragHandler, { passive: true });
     this.addEventListener('click', this.onClickHandler, { passive: true });
+    this.addEventListener('contextmenu', this.onContextMenuHandler, {
+      passive: true,
+    });
 
     window.addEventListener('resize', this.debouncedUpdateDimensions, {
       passive: true,
@@ -300,6 +306,7 @@ export class Cocoen extends HTMLElement {
     this.removeEventListener('mousemove', this.onDragHandler);
     this.removeEventListener('touchmove', this.onDragHandler);
     this.removeEventListener('click', this.onClickHandler);
+    this.removeEventListener('contextmenu', this.onContextMenuHandler);
 
     window.removeEventListener('resize', this.debouncedUpdateDimensions);
     window.removeEventListener('mouseup', this.onDragEndHandler);
@@ -372,6 +379,10 @@ export class Cocoen extends HTMLElement {
   onClick(event: MouseEvent): void {
     this.shouldAnimateTo = 0;
     this.x = calculateXfromEvent(event, this);
+  }
+
+  onContextMenu(): void {
+    this.isDragging = false;
   }
 
   onIntersection(
