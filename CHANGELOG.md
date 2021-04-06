@@ -1,5 +1,12 @@
 # Changelog
 
+### [3.0.4](https://www.github.com/koenoe/cocoen/compare/v3.0.3...v3.0.4) (2021-04-06)
+
+
+### Bug Fixes
+
+* handle contextmenu ([f9bac35](https://www.github.com/koenoe/cocoen/commit/f9bac35577743aa01ed9709e2c679a1e187f46aa))
+
 ### [3.0.3](https://www.github.com/koenoe/cocoen/compare/v3.0.2...v3.0.3) (2021-04-05)
 
 ### Bug Fixes
