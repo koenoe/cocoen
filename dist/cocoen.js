@@ -57,6 +57,7 @@ var Cocoen=(()=>{var v=Object.defineProperty;var g=(n,e)=>{for(var t in e)v(n,t,
   ::slotted(img) {
     max-height: 100%;
     object-fit: contain;
+    pointer-events: none;
   }
 
   ::slotted(img[slot=before]) {

@@ -57,6 +57,7 @@ var s="cocoen",o=`${s}-component`;var a=n=>Number.parseInt(window.getComputedSty
   ::slotted(img) {
     max-height: 100%;
     object-fit: contain;
+    pointer-events: none;
   }
 
   ::slotted(img[slot=before]) {

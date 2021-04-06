@@ -64,6 +64,7 @@ const css = `
   ::slotted(img) {
     max-height: 100%;
     object-fit: contain;
+    pointer-events: none;
   }
 
   ::slotted(img[slot=before]) {
