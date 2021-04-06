@@ -1,5 +1,17 @@
 # Changelog
 
+## [3.1.0](https://www.github.com/koenoe/cocoen/compare/v3.0.4...v3.1.0) (2021-04-06)
+
+
+### Features
+
+* support options object to  too ([1ad6226](https://www.github.com/koenoe/cocoen/commit/1ad6226ef04cf7af3c8f71d3a5c7f1b898c6d403))
+
+
+### Bug Fixes
+
+* remove unused code ([bf39ff8](https://www.github.com/koenoe/cocoen/commit/bf39ff8033ea65b8a5482e82f45e8d31d1c591c5))
+
 ### [3.0.4](https://www.github.com/koenoe/cocoen/compare/v3.0.3...v3.0.4) (2021-04-06)
 
 ### Bug Fixes
