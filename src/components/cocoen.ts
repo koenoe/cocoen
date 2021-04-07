@@ -110,7 +110,7 @@ export class Cocoen extends HTMLElement {
 
   private onIntersectionHandler: IntersectionObserverCallback;
 
-  private shouldAnimateTo: number | undefined;
+  private animateToValue = 0;
 
   private colorValue = '#fff';
 
@@ -122,9 +122,9 @@ export class Cocoen extends HTMLElement {
 
   private openRatioValue = 50;
 
-  private isRendered = false;
+  private isRenderedValue = false;
 
-  private isVisible = false;
+  private isVisibleValue = false;
 
   private xValue = 0;
 
@@ -223,6 +223,30 @@ export class Cocoen extends HTMLElement {
     });
   }
 
+  get isVisible(): boolean {
+    return this.isVisibleValue;
+  }
+
+  set isVisible(value: boolean) {
+    this.isVisibleValue = value;
+  }
+
+  get isRendered(): boolean {
+    return this.isRenderedValue;
+  }
+
+  set isRendered(value: boolean) {
+    this.isRenderedValue = value;
+  }
+
+  get animateTo(): number {
+    return this.animateToValue;
+  }
+
+  set animateTo(value: number) {
+    this.animateToValue = value;
+  }
+
   static get observedAttributes(): Array<string> {
     return ['start', 'color'];
   }
@@ -237,12 +261,9 @@ export class Cocoen extends HTMLElement {
     }
 
     if (name === 'start') {
-      this.shouldAnimateTo = Number.parseInt(
-        String(this.getAttribute('start')),
-        10,
-      );
+      this.animateTo = Number.parseInt(String(this.getAttribute('start')), 10);
       if (this.isVisible) {
-        this.openRatio = this.shouldAnimateTo;
+        this.openRatio = this.animateTo;
       }
     }
 
@@ -343,7 +364,7 @@ export class Cocoen extends HTMLElement {
     const drag = this.shadowDOM.querySelector('#drag') as HTMLElement;
     const openRatio = formatPercentageAsString(this.openRatio);
 
-    if (this.shouldAnimateTo) {
+    if (this.animateTo) {
       before.style.transition = 'width .75s';
       drag.style.transition = 'left .75s';
     } else {
@@ -360,8 +381,8 @@ export class Cocoen extends HTMLElement {
   }
 
   onDragStart(): void {
+    this.animateTo = 0;
     this.isDragging = true;
-    this.shouldAnimateTo = 0;
   }
 
   onDrag(event: MouseEvent | TouchEvent): void {
@@ -377,7 +398,7 @@ export class Cocoen extends HTMLElement {
   }
 
   onClick(event: MouseEvent): void {
-    this.shouldAnimateTo = 0;
+    this.animateTo = 0;
     this.x = calculateXfromEvent(event, this);
   }
 
@@ -397,11 +418,11 @@ export class Cocoen extends HTMLElement {
             this.customEventPayload(),
           ),
         );
-        if (this.shouldAnimateTo) {
-          this.openRatio = this.shouldAnimateTo;
+        if (this.animateTo) {
+          this.openRatio = this.animateTo;
         }
-        observer.unobserve(this);
         this.isVisible = true;
+        observer.unobserve(this);
       }
     });
   }
