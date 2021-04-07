@@ -1,8 +1,8 @@
 import './cocoen';
 
 import { fixture, html, oneEvent } from '@open-wc/testing';
-import { calculateXfromEvent } from '../utils/calculate-x-from-event';
 
+import { calculateXfromEvent } from '../utils/calculate-x-from-event';
 import type { Cocoen } from './cocoen';
 
 jest.mock('../utils/calculate-x-from-event');
