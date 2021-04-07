@@ -2,10 +2,9 @@
 
 ### [3.1.1](https://www.github.com/koenoe/cocoen/compare/v3.1.0...v3.1.1) (2021-04-07)
 
-
 ### Bug Fixes
 
-* more test coverage and some small refactoring ([a397963](https://www.github.com/koenoe/cocoen/commit/a39796359522a31543edbce4d974efb3d338b84c))
+- more test coverage and some small refactoring ([a397963](https://www.github.com/koenoe/cocoen/commit/a39796359522a31543edbce4d974efb3d338b84c))
 
 ## [3.1.0](https://www.github.com/koenoe/cocoen/compare/v3.0.4...v3.1.0) (2021-04-06)
 
