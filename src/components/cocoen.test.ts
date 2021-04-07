@@ -1,6 +1,6 @@
-import { fixture, html } from '@open-wc/testing';
-
 import './cocoen';
+
+import { fixture, html } from '@open-wc/testing';
 
 describe('<cocoen-component />', () => {
   beforeEach(() => {
