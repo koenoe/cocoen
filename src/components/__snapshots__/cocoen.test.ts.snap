@@ -1,0 +1,83 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<cocoen-component /> should have the correct shadowDOM 1`] = `
+"
+      <style>
+  :host {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    cursor: pointer;
+    display: block;
+    overflow: hidden;
+    position: relative;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -ms-user-select: none;
+  }
+
+  :host *,
+  :host *:after,
+  :host *:before {
+    box-sizing: inherit;
+    -moz-box-sizing: inherit;
+    -webkit-box-sizing: inherit;
+  }
+
+  #before {
+    height: 100%;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    width: 50%;
+  }
+
+  #drag {
+    background: var(--color, #fff);
+    bottom: 0;
+    cursor: ew-resize;
+    left: 50%;
+    margin-left: -1px;
+    position: absolute;
+    top: 0;
+    width: 2px;
+  }
+
+  #drag:before {
+    border: 3px solid var(--color, #fff);
+    content: '';
+    height: 30px;
+    left: 50%;
+    margin-left: -7px;
+    margin-top: -15px;
+    position: absolute;
+    top: 50%;
+    width: 14px;
+  }
+
+  ::slotted(img) {
+    max-height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+  }
+
+  ::slotted(img[slot=before]) {
+    max-width: none;
+  }
+
+  ::slotted(img[slot=after]) {
+    display: block;
+    max-width: 100%;
+    width: 100%;
+  }
+</style>
+      <div id=\\"before\\">
+        <slot name=\\"before\\"></slot>
+      </div>
+      <slot name=\\"after\\"></slot>
+      <div id=\\"drag\\" part=\\"drag\\"></div>
+    "
+`;

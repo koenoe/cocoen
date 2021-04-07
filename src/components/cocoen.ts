@@ -5,6 +5,17 @@ import { calculateXfromEvent } from '../utils/calculate-x-from-event';
 import { debounce } from '../utils/debounce';
 import { formatPercentageAsString } from '../utils/format-percentage-as-string';
 
+type CustomEventPayload = {
+  bubbles: boolean;
+  composed: boolean;
+  detail: {
+    elementWidth: number;
+    openRatio: number;
+    isRendered: boolean;
+    isVisible: boolean;
+  };
+};
+
 const css = `
   :host {
     box-sizing: border-box;
@@ -78,17 +89,6 @@ const css = `
   }
 `;
 
-type CustomEventPayload = {
-  bubbles: boolean;
-  composed: boolean;
-  detail: {
-    elementWidth: number;
-    openRatio: number;
-    isRendered: boolean;
-    isVisible: boolean;
-  };
-};
-
 export class Cocoen extends HTMLElement {
   private drag: HTMLElement | null;
 
@@ -132,7 +132,7 @@ export class Cocoen extends HTMLElement {
     super();
 
     this.drag = null;
-    this.shadowDOM = this.attachShadow({ mode: 'closed' });
+    this.shadowDOM = this.attachShadow({ mode: 'open' });
 
     this.onDragStartHandler = () => this.onDragStart();
 
