@@ -5,6 +5,7 @@
     /* Paths */
     "outDir": "./dist",
     "typeRoots": ["./node_modules/@types", "./type-definitions"],
+    "types": ["node", "jest"],
 
     /* Project */
     "target": "ESNext", // TypeScript is not used for building, allow all modern features
