@@ -2,7 +2,29 @@ import './cocoen';
 
 import { fixture, html, oneEvent } from '@open-wc/testing';
 
+import { calculateXfromEvent } from '../utils/calculate-x-from-event';
 import type { Cocoen } from './cocoen';
+
+jest.mock('../utils/calculate-x-from-event');
+
+const mockedMouseEvent = document.createEvent('MouseEvent');
+mockedMouseEvent.initMouseEvent(
+  'click',
+  true,
+  true,
+  window,
+  1,
+  800,
+  600,
+  290,
+  260,
+  false,
+  false,
+  false,
+  false,
+  0,
+  null,
+);
 
 describe('<cocoen-component />', () => {
   beforeEach(() => {
@@ -16,9 +38,11 @@ describe('<cocoen-component />', () => {
     window.IntersectionObserver = mockIntersectionObserver;
   });
 
+  afterEach(() => jest.restoreAllMocks());
+
   test('should have the correct shadowDOM', async () => {
     const component = await fixture(
-      html` <cocoen-component></cocoen-component> `,
+      html`<cocoen-component></cocoen-component>`,
     );
     expect(component.shadowRoot?.innerHTML).toMatchSnapshot();
   });
@@ -39,7 +63,7 @@ describe('<cocoen-component />', () => {
 
   test('should dispatch custom `resized` event', async () => {
     const component: Cocoen = await fixture(
-      html` <cocoen-component></cocoen-component> `,
+      html`<cocoen-component></cocoen-component>`,
     );
     setTimeout(() => component.updateDimensions());
     const event = await oneEvent(component, 'cocoen-component:resized');
@@ -48,10 +72,54 @@ describe('<cocoen-component />', () => {
 
   test('should dispatch custom `updated` event', async () => {
     const component: Cocoen = await fixture(
-      html` <cocoen-component></cocoen-component> `,
+      html`<cocoen-component></cocoen-component>`,
     );
     setTimeout(() => component.updateStyles());
     const event = await oneEvent(component, 'cocoen-component:updated');
     expect(event).toBeTruthy();
+  });
+
+  test('should support `color` attribute', async () => {
+    const component: Cocoen = await fixture(
+      html`<cocoen-component color="pink"></cocoen-component>`,
+    );
+    expect(component.color).toEqual('pink');
+  });
+
+  test('should support `start` attribute', async () => {
+    const component: Cocoen = await fixture(
+      html`<cocoen-component start="75"></cocoen-component>`,
+    );
+    expect(component.animateTo).toEqual(75);
+  });
+
+  test('should call `calculateXfromEvent` when clicked', async () => {
+    const component: Cocoen = await fixture(
+      html`<cocoen-component></cocoen-component>`,
+    );
+
+    component.onClick(mockedMouseEvent);
+    expect(component.animateTo).toEqual(0);
+    expect(calculateXfromEvent).toBeCalledWith(mockedMouseEvent, component);
+  });
+
+  test('should set `isDragging` to `true` when drag starts', async () => {
+    const component: Cocoen = await fixture(
+      html`<cocoen-component></cocoen-component>`,
+    );
+
+    component.onDragStart();
+    expect(component.animateTo).toEqual(0);
+    expect(component.isDragging).toBeTruthy();
+  });
+
+  test('should set `isDragging` to `false` when drag ends', async () => {
+    const component: Cocoen = await fixture(
+      html`<cocoen-component></cocoen-component>`,
+    );
+
+    component.onDragStart();
+    component.onDragEnd();
+    expect(component.isDragging).toBeFalsy();
   });
 });
