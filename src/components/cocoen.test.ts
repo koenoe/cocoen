@@ -20,15 +20,4 @@ describe('<cocoen-component />', () => {
     );
     expect(component.shadowRoot?.innerHTML).toMatchSnapshot();
   });
-
-  // it('should update styles when setting `openRatio`', async () => {
-  //   const component = await fixture(
-  //     html` <cocoen-component></cocoen-component> `,
-  //   );
-  //   const spy = jest.spyOn(component, 'openRatio', 'set');
-  //   component.openRatio = 50;
-
-  //   expect(spy).toHaveBeenCalled();
-  //   expect(component.openRatio).toBe(50);
-  // });
 });
