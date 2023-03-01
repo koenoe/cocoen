@@ -1,7 +1,8 @@
-import { componentName } from '../config';
+import { Direction, componentName } from '../config';
+import { calculateElementHeight } from '../utils/calculate-element-height';
 import { calculateElementWidth } from '../utils/calculate-element-width';
 import { calculateOpenRatio } from '../utils/calculate-open-ratio';
-import { calculateXfromEvent } from '../utils/calculate-x-from-event';
+import { calculatePointfromEvent } from '../utils/calculate-point-from-event';
 import { debounce } from '../utils/debounce';
 import { formatPercentageAsString } from '../utils/format-percentage-as-string';
 
@@ -9,7 +10,7 @@ type CustomEventPayload = {
   bubbles: boolean;
   composed: boolean;
   detail: {
-    elementWidth: number;
+    elementSize: number;
     openRatio: number;
     isRendered: boolean;
     isVisible: boolean;
@@ -54,10 +55,10 @@ const css = `
     bottom: 0;
     cursor: ew-resize;
     left: 50%;
-    margin-left: -1px;
     position: absolute;
     top: 0;
     width: 2px;
+    transform: translate3d(-50%, 0, 0);
   }
 
   #drag:before {
@@ -65,11 +66,10 @@ const css = `
     content: '';
     height: 30px;
     left: 50%;
-    margin-left: -7px;
-    margin-top: -15px;
     position: absolute;
     top: 50%;
     width: 14px;
+    transform: translate3d(-50%, -50%, 0);
   }
 
   ::slotted(img) {
@@ -114,9 +114,11 @@ export class Cocoen extends HTMLElement {
 
   private colorValue = '#fff';
 
-  private dragElementWidthValue = 0;
+  private directionValue: Direction = 'left-to-right';
 
-  private elementWidthValue = 0;
+  private dragElementSizeValue = 0;
+
+  private elementSizeValue = 0;
 
   private isDraggingValue = false;
 
@@ -126,7 +128,7 @@ export class Cocoen extends HTMLElement {
 
   private isVisibleValue = false;
 
-  private xValue = 0;
+  private pointValue = 0;
 
   constructor() {
     super();
@@ -158,36 +160,36 @@ export class Cocoen extends HTMLElement {
     );
   }
 
-  get x(): number {
-    return this.xValue;
+  get point(): number {
+    return this.pointValue;
   }
 
-  set x(value: number) {
-    this.xValue = value;
+  set point(value: number) {
+    this.pointValue = value;
 
     window.requestAnimationFrame(() => {
       this.openRatio = calculateOpenRatio({
-        x: this.xValue,
-        dragElementWidth: this.dragElementWidth,
-        hostElementWidth: this.elementWidth,
+        value: this.pointValue,
+        dragElementSize: this.dragElementSize,
+        hostElementSize: this.elementSize,
       });
     });
   }
 
-  get elementWidth(): number {
-    return this.elementWidthValue;
+  get elementSize(): number {
+    return this.elementSizeValue;
   }
 
-  set elementWidth(value: number) {
-    this.elementWidthValue = value;
+  set elementSize(value: number) {
+    this.elementSizeValue = value;
   }
 
-  get dragElementWidth(): number {
-    return this.dragElementWidthValue;
+  get dragElementSize(): number {
+    return this.dragElementSizeValue;
   }
 
-  set dragElementWidth(value: number) {
-    this.dragElementWidthValue = value;
+  set dragElementSize(value: number) {
+    this.dragElementSizeValue = value;
   }
 
   get isDragging(): boolean {
@@ -246,8 +248,21 @@ export class Cocoen extends HTMLElement {
     this.animateToValue = value;
   }
 
+  get direction(): Direction {
+    return this.directionValue;
+  }
+
+  set direction(value: Direction) {
+    this.directionValue = value;
+
+    window.requestAnimationFrame(() => {
+      this.updateDimensions();
+      this.updateStyles();
+    });
+  }
+
   static get observedAttributes(): Array<string> {
-    return ['start', 'color'];
+    return ['start', 'color', 'direction'];
   }
 
   attributeChangedCallback(
@@ -268,6 +283,10 @@ export class Cocoen extends HTMLElement {
 
     if (name === 'color') {
       this.color = String(this.getAttribute('color'));
+    }
+
+    if (name === 'direction') {
+      this.direction = this.getAttribute('direction') as Direction;
     }
   }
 
@@ -347,15 +366,24 @@ export class Cocoen extends HTMLElement {
   }
 
   updateDimensions(): void {
-    this.elementWidth = calculateElementWidth(this);
+    this.elementSize = this.isHorizontal()
+      ? calculateElementWidth(this)
+      : calculateElementHeight(this);
 
     if (this.drag) {
-      this.dragElementWidth = calculateElementWidth(this.drag);
+      this.dragElementSize = this.isHorizontal()
+        ? calculateElementWidth(this.drag)
+        : calculateElementHeight(this.drag);
     }
 
     this.querySelectorAll('img').forEach((img) => {
-      // eslint-disable-next-line no-param-reassign
-      img.width = this.elementWidth;
+      if (this.isHorizontal()) {
+        // eslint-disable-next-line no-param-reassign
+        img.width = this.elementSize;
+      } else {
+        // eslint-disable-next-line no-param-reassign
+        img.height = this.elementSize;
+      }
     });
 
     this.dispatchEvent(
@@ -369,15 +397,30 @@ export class Cocoen extends HTMLElement {
     const openRatio = formatPercentageAsString(this.openRatio);
 
     if (this.animateTo) {
-      before.style.transition = 'width .75s';
-      drag.style.transition = 'left .75s';
+      before.style.transition = 'width height .75s';
+      drag.style.transition = 'left right top bottom .75s';
     } else {
       before.style.transition = 'none';
       drag.style.transition = 'none';
     }
 
-    before.style.width = openRatio;
-    drag.style.left = openRatio;
+    if (this.direction === 'left-to-right') {
+      before.style.width = openRatio;
+      drag.style.left = openRatio;
+      drag.style.right = 'auto';
+    } else if (this.direction === 'right-to-left') {
+      before.style.width = openRatio;
+      drag.style.right = openRatio;
+      drag.style.left = 'auto';
+    } else if (this.direction === 'top-to-bottom') {
+      before.style.height = openRatio;
+      drag.style.top = openRatio;
+      drag.style.bottom = 'auto';
+    } else if (this.direction === 'bottom-to-top') {
+      before.style.height = openRatio;
+      drag.style.bottom = openRatio;
+      drag.style.top = 'auto';
+    }
 
     this.dispatchEvent(
       new CustomEvent(`${componentName}:updated`, this.customEventPayload()),
@@ -394,7 +437,7 @@ export class Cocoen extends HTMLElement {
       return;
     }
 
-    this.x = calculateXfromEvent(event, this);
+    this.point = calculatePointfromEvent(event, this, this.direction);
   }
 
   onDragEnd(): void {
@@ -403,7 +446,7 @@ export class Cocoen extends HTMLElement {
 
   onClick(event: MouseEvent): void {
     this.animateTo = 0;
-    this.x = calculateXfromEvent(event, this);
+    this.point = calculatePointfromEvent(event, this, this.direction);
   }
 
   onContextMenu(): void {
@@ -436,12 +479,18 @@ export class Cocoen extends HTMLElement {
       bubbles: true,
       composed: true,
       detail: {
-        elementWidth: this.elementWidth,
+        elementSize: this.elementSize,
         openRatio: this.openRatio,
         isRendered: this.isRendered,
         isVisible: this.isVisible,
       },
     };
+  }
+
+  isHorizontal(): boolean {
+    return (
+      this.direction === 'left-to-right' || this.direction === 'right-to-left'
+    );
   }
 }
 

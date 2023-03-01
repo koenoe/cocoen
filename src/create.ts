@@ -1,9 +1,10 @@
 import type { Cocoen } from './components/cocoen';
-import { componentName } from './config';
+import { componentName, Direction } from './config';
 
 type Options = {
   start?: number;
   color?: string;
+  direction?: Direction;
   [key: string]: unknown;
 };
 
@@ -28,6 +29,10 @@ export const create = (element: HTMLElement, options?: Options): Cocoen => {
 
   if (options && options.color) {
     component.setAttribute('color', options.color);
+  }
+
+  if (options && options.direction) {
+    component.setAttribute('direction', options.direction);
   }
 
   Object.entries(element.dataset).forEach(([key, value]) => {
