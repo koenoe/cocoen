@@ -67,6 +67,7 @@ declare class Cocoen extends HTMLElement {
 export declare type Options = {
 	start?: number;
 	color?: string;
+	[key: string]: unknown;
 };
 export declare const create: (element: HTMLElement, options?: Options | undefined) => Cocoen;
 export declare const parse: (context: HTMLElement) => void;

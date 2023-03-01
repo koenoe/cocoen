@@ -3,19 +3,14 @@ type CalculateOpenRatioPayload = {
   dragElementWidth: number;
   hostElementWidth: number;
 };
+
 export const calculateOpenRatio = ({
   dragElementWidth,
   hostElementWidth,
   x,
 }: CalculateOpenRatioPayload): number => {
-  let value = x;
-  if (x < 0) {
-    value = dragElementWidth;
-  } else if (x >= hostElementWidth) {
-    value = hostElementWidth - dragElementWidth;
-  }
-
-  let ratio = value + dragElementWidth / 2;
-  ratio /= hostElementWidth;
-  return ratio * 100;
+  const clampedX = Math.min(Math.max(x, 0), hostElementWidth);
+  const halfDragWidth = 0.5 * dragElementWidth;
+  const ratio = (clampedX + halfDragWidth) / hostElementWidth;
+  return 100 * ratio;
 };
