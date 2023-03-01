@@ -1,5 +1,13 @@
 # Changelog
 
+### [3.1.2](https://www.github.com/koenoe/cocoen/compare/v3.1.1...v3.1.2) (2023-03-01)
+
+
+### Bug Fixes
+
+* fix issue [#86](https://www.github.com/koenoe/cocoen/issues/86) ([15738ba](https://www.github.com/koenoe/cocoen/commit/15738ba6e1b4c2ac13c08a8164139c70703ed8bb))
+* linting ([957c364](https://www.github.com/koenoe/cocoen/commit/957c36454a8e1847b4922b32b9b01a7aed54910b))
+
 ### [3.1.1](https://www.github.com/koenoe/cocoen/compare/v3.1.0...v3.1.1) (2021-04-07)
 
 ### Bug Fixes
