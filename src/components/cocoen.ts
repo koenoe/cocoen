@@ -135,7 +135,6 @@ export class Cocoen extends HTMLElement {
     this.shadowDOM = this.attachShadow({ mode: 'open' });
 
     this.onDragStartHandler = () => this.onDragStart();
-
     this.onDragEndHandler = () => this.onDragEnd();
     this.onDragHandler = (event: MouseEvent | TouchEvent) => this.onDrag(event);
     this.onClickHandler = (event: MouseEvent) => this.onClick(event);
@@ -353,6 +352,10 @@ export class Cocoen extends HTMLElement {
     if (this.drag) {
       this.dragElementWidth = calculateElementWidth(this.drag);
     }
+
+    this.querySelectorAll('img').forEach((img) => {
+      img.width = this.elementWidth;
+    });
 
     this.dispatchEvent(
       new CustomEvent(`${componentName}:resized`, this.customEventPayload()),
