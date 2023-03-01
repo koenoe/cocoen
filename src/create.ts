@@ -1,5 +1,5 @@
 import type { Cocoen } from './components/cocoen';
-import { componentName, Direction } from './config';
+import { Direction, componentName } from './config';
 
 type Options = {
   start?: number;
