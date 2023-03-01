@@ -354,6 +354,7 @@ export class Cocoen extends HTMLElement {
     }
 
     this.querySelectorAll('img').forEach((img) => {
+      // eslint-disable-next-line no-param-reassign
       img.width = this.elementWidth;
     });
 
