@@ -1,5 +1,12 @@
 # Changelog
 
+### [3.1.3](https://www.github.com/koenoe/cocoen/compare/v3.1.2...v3.1.3) (2023-03-01)
+
+
+### Bug Fixes
+
+* ai improvements, lol ([50bb2ab](https://www.github.com/koenoe/cocoen/commit/50bb2abe4d696e96b112c9baa8960fd204471262))
+
 ### [3.1.2](https://www.github.com/koenoe/cocoen/compare/v3.1.1...v3.1.2) (2023-03-01)
 
 ### Bug Fixes
