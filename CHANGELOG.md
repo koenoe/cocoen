@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.2.0](https://www.github.com/koenoe/cocoen/compare/v3.1.3...v3.2.0) (2023-03-02)
+
+
+### Features
+
+* **different-orientations:** wip ([18ab9ea](https://www.github.com/koenoe/cocoen/commit/18ab9eaa73a540d98cb0d5d3b6a95263aa0bbf9b))
+* **orientation:** add official orientation support ([ee75fb3](https://www.github.com/koenoe/cocoen/commit/ee75fb3ae9367921ca91f4a872031b73ba8e3bad))
+
 ### [3.1.3](https://www.github.com/koenoe/cocoen/compare/v3.1.2...v3.1.3) (2023-03-01)
 
 ### Bug Fixes
