@@ -2,10 +2,10 @@ import './cocoen';
 
 import { fixture, html, oneEvent } from '@open-wc/testing';
 
-import { calculateXfromEvent } from '../utils/calculate-x-from-event';
+import { calculatePointfromEvent } from '../utils/calculate-point-from-event';
 import type { Cocoen } from './cocoen';
 
-jest.mock('../utils/calculate-x-from-event');
+jest.mock('../utils/calculate-point-from-event');
 
 const mockedMouseEvent = document.createEvent('MouseEvent');
 mockedMouseEvent.initMouseEvent(
@@ -93,14 +93,18 @@ describe('<cocoen-component />', () => {
     expect(component.animateTo).toEqual(75);
   });
 
-  test('should call `calculateXfromEvent` when clicked', async () => {
+  test('should call `calculatePointfromEvent` when clicked', async () => {
     const component: Cocoen = await fixture(
       html`<cocoen-component></cocoen-component>`,
     );
 
     component.onClick(mockedMouseEvent);
     expect(component.animateTo).toEqual(0);
-    expect(calculateXfromEvent).toBeCalledWith(mockedMouseEvent, component);
+    expect(calculatePointfromEvent).toBeCalledWith(
+      mockedMouseEvent,
+      component,
+      'horizontal',
+    );
   });
 
   test('should set `isDragging` to `true` when drag starts', async () => {

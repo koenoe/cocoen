@@ -1,14 +1,14 @@
 import { calculateOpenRatio } from './calculate-open-ratio';
 
 describe('calculateOpenRatio', () => {
-  test('should return open ratio value based on host and drag element widths', () => {
-    const dragElementWidth = 10;
-    const hostElementWidth = 500;
-    const x = 250;
+  test('should return open ratio value based on host and drag element Sizes', () => {
+    const dragElementSize = 10;
+    const hostElementSize = 500;
+    const value = 250;
     const result = calculateOpenRatio({
-      dragElementWidth,
-      hostElementWidth,
-      x,
+      dragElementSize,
+      hostElementSize,
+      value,
     });
 
     expect(result).toEqual(51);

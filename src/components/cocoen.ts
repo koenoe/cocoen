@@ -1,7 +1,8 @@
-import { componentName } from '../config';
+import { Orientation, componentName } from '../config';
+import { calculateElementHeight } from '../utils/calculate-element-height';
 import { calculateElementWidth } from '../utils/calculate-element-width';
 import { calculateOpenRatio } from '../utils/calculate-open-ratio';
-import { calculateXfromEvent } from '../utils/calculate-x-from-event';
+import { calculatePointfromEvent } from '../utils/calculate-point-from-event';
 import { debounce } from '../utils/debounce';
 import { formatPercentageAsString } from '../utils/format-percentage-as-string';
 
@@ -9,7 +10,7 @@ type CustomEventPayload = {
   bubbles: boolean;
   composed: boolean;
   detail: {
-    elementWidth: number;
+    elementSize: number;
     openRatio: number;
     isRendered: boolean;
     isVisible: boolean;
@@ -49,15 +50,29 @@ const css = `
     width: 50%;
   }
 
+  :host([orientation="vertical"]) #before {
+    width: 100%;
+    height: 50%;
+  }
+
   #drag {
     background: var(--color, #fff);
     bottom: 0;
     cursor: ew-resize;
     left: 50%;
-    margin-left: -1px;
     position: absolute;
     top: 0;
     width: 2px;
+    transform: translate3d(-50%, 0, 0);
+  }
+
+  :host([orientation="vertical"]) #drag {
+    height: 2px;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    cursor: ns-resize;
+    transform: translate3d(0, -50%, 0);
   }
 
   #drag:before {
@@ -65,15 +80,20 @@ const css = `
     content: '';
     height: 30px;
     left: 50%;
-    margin-left: -7px;
-    margin-top: -15px;
     position: absolute;
     top: 50%;
     width: 14px;
+    transform: translate3d(-50%, -50%, 0);
+  }
+
+  :host([orientation="vertical"]) #drag:before {
+    height: 14px;
+    width: 30px;
   }
 
   ::slotted(img) {
     max-height: 100%;
+    max-width: 100%;
     object-fit: contain;
     pointer-events: none;
   }
@@ -82,10 +102,20 @@ const css = `
     max-width: none;
   }
 
+  :host([orientation="vertical"]) ::slotted(img[slot=before]) {
+    max-height: none;
+    max-width: 100%;
+  }
+
   ::slotted(img[slot=after]) {
     display: block;
     max-width: 100%;
     width: 100%;
+  }
+
+  :host([orientation="vertical"]) ::slotted(img[slot=after]) {
+    max-height: 100%;
+    height: 100%;
   }
 `;
 
@@ -114,9 +144,11 @@ export class Cocoen extends HTMLElement {
 
   private colorValue = '#fff';
 
-  private dragElementWidthValue = 0;
+  private orientationValue: Orientation = 'horizontal';
 
-  private elementWidthValue = 0;
+  private dragElementSizeValue = 0;
+
+  private elementSizeValue = 0;
 
   private isDraggingValue = false;
 
@@ -126,7 +158,7 @@ export class Cocoen extends HTMLElement {
 
   private isVisibleValue = false;
 
-  private xValue = 0;
+  private pointValue = 0;
 
   constructor() {
     super();
@@ -158,36 +190,36 @@ export class Cocoen extends HTMLElement {
     );
   }
 
-  get x(): number {
-    return this.xValue;
+  get point(): number {
+    return this.pointValue;
   }
 
-  set x(value: number) {
-    this.xValue = value;
+  set point(value: number) {
+    this.pointValue = value;
 
     window.requestAnimationFrame(() => {
       this.openRatio = calculateOpenRatio({
-        x: this.xValue,
-        dragElementWidth: this.dragElementWidth,
-        hostElementWidth: this.elementWidth,
+        value: this.pointValue,
+        dragElementSize: this.dragElementSize,
+        hostElementSize: this.elementSize,
       });
     });
   }
 
-  get elementWidth(): number {
-    return this.elementWidthValue;
+  get elementSize(): number {
+    return this.elementSizeValue;
   }
 
-  set elementWidth(value: number) {
-    this.elementWidthValue = value;
+  set elementSize(value: number) {
+    this.elementSizeValue = value;
   }
 
-  get dragElementWidth(): number {
-    return this.dragElementWidthValue;
+  get dragElementSize(): number {
+    return this.dragElementSizeValue;
   }
 
-  set dragElementWidth(value: number) {
-    this.dragElementWidthValue = value;
+  set dragElementSize(value: number) {
+    this.dragElementSizeValue = value;
   }
 
   get isDragging(): boolean {
@@ -246,8 +278,21 @@ export class Cocoen extends HTMLElement {
     this.animateToValue = value;
   }
 
+  get orientation(): Orientation {
+    return this.orientationValue;
+  }
+
+  set orientation(value: Orientation) {
+    this.orientationValue = value;
+
+    window.requestAnimationFrame(() => {
+      this.updateDimensions();
+      this.updateStyles();
+    });
+  }
+
   static get observedAttributes(): Array<string> {
-    return ['start', 'color'];
+    return ['start', 'color', 'orientation'];
   }
 
   attributeChangedCallback(
@@ -268,6 +313,10 @@ export class Cocoen extends HTMLElement {
 
     if (name === 'color') {
       this.color = String(this.getAttribute('color'));
+    }
+
+    if (name === 'orientation') {
+      this.orientation = this.getAttribute('orientation') as Orientation;
     }
   }
 
@@ -347,15 +396,26 @@ export class Cocoen extends HTMLElement {
   }
 
   updateDimensions(): void {
-    this.elementWidth = calculateElementWidth(this);
+    this.elementSize =
+      this.orientation === 'horizontal'
+        ? calculateElementWidth(this)
+        : calculateElementHeight(this);
 
     if (this.drag) {
-      this.dragElementWidth = calculateElementWidth(this.drag);
+      this.dragElementSize =
+        this.orientation === 'horizontal'
+          ? calculateElementWidth(this.drag)
+          : calculateElementHeight(this.drag);
     }
 
     this.querySelectorAll('img').forEach((img) => {
-      // eslint-disable-next-line no-param-reassign
-      img.width = this.elementWidth;
+      if (this.orientation === 'horizontal') {
+        // eslint-disable-next-line no-param-reassign
+        img.width = this.elementSize;
+      } else {
+        // eslint-disable-next-line no-param-reassign
+        img.height = this.elementSize;
+      }
     });
 
     this.dispatchEvent(
@@ -369,15 +429,24 @@ export class Cocoen extends HTMLElement {
     const openRatio = formatPercentageAsString(this.openRatio);
 
     if (this.animateTo) {
-      before.style.transition = 'width .75s';
-      drag.style.transition = 'left .75s';
+      before.style.transition = 'width height .75s';
+      drag.style.transition = 'left top .75s';
     } else {
       before.style.transition = 'none';
       drag.style.transition = 'none';
     }
 
-    before.style.width = openRatio;
-    drag.style.left = openRatio;
+    if (this.orientation === 'horizontal') {
+      before.style.height = '100%';
+      before.style.width = openRatio;
+      drag.style.left = openRatio;
+      drag.style.top = '0px';
+    } else if (this.orientation === 'vertical') {
+      before.style.width = '100%';
+      before.style.height = openRatio;
+      drag.style.top = openRatio;
+      drag.style.left = '0px';
+    }
 
     this.dispatchEvent(
       new CustomEvent(`${componentName}:updated`, this.customEventPayload()),
@@ -394,7 +463,7 @@ export class Cocoen extends HTMLElement {
       return;
     }
 
-    this.x = calculateXfromEvent(event, this);
+    this.point = calculatePointfromEvent(event, this, this.orientation);
   }
 
   onDragEnd(): void {
@@ -403,7 +472,7 @@ export class Cocoen extends HTMLElement {
 
   onClick(event: MouseEvent): void {
     this.animateTo = 0;
-    this.x = calculateXfromEvent(event, this);
+    this.point = calculatePointfromEvent(event, this, this.orientation);
   }
 
   onContextMenu(): void {
@@ -436,7 +505,7 @@ export class Cocoen extends HTMLElement {
       bubbles: true,
       composed: true,
       detail: {
-        elementWidth: this.elementWidth,
+        elementSize: this.elementSize,
         openRatio: this.openRatio,
         isRendered: this.isRendered,
         isVisible: this.isVisible,

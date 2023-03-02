@@ -1,6 +1,6 @@
-import { calculateXfromEvent } from './calculate-x-from-event';
+import { calculatePointfromEvent } from './calculate-point-from-event';
 
-describe('calculateXfromEvent', () => {
+describe('calculatePointfromEvent', () => {
   test('should calculate x from MouseEvent', () => {
     const event = document.createEvent('MouseEvent');
     event.initMouseEvent(
@@ -20,9 +20,12 @@ describe('calculateXfromEvent', () => {
       0,
       null,
     );
-    const result = calculateXfromEvent(event);
 
-    expect(result).toEqual(290);
+    const x = calculatePointfromEvent(event);
+    const y = calculatePointfromEvent(event, undefined, 'vertical');
+
+    expect(x).toEqual(290);
+    expect(y).toEqual(260);
   });
 
   test('should calculate x from TouchEvent', () => {
@@ -34,8 +37,11 @@ describe('calculateXfromEvent', () => {
         },
       ],
     } as TouchEventInit);
-    const result = calculateXfromEvent(event);
 
-    expect(result).toEqual(290);
+    const x = calculatePointfromEvent(event);
+    const y = calculatePointfromEvent(event, undefined, 'vertical');
+
+    expect(x).toEqual(290);
+    expect(y).toEqual(260);
   });
 });

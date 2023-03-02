@@ -1,9 +1,10 @@
 import type { Cocoen } from './components/cocoen';
-import { componentName } from './config';
+import { Orientation, componentName } from './config';
 
 type Options = {
   start?: number;
   color?: string;
+  orientation?: Orientation;
   [key: string]: unknown;
 };
 
@@ -28,6 +29,10 @@ export const create = (element: HTMLElement, options?: Options): Cocoen => {
 
   if (options && options.color) {
     component.setAttribute('color', options.color);
+  }
+
+  if (options && options.orientation) {
+    component.setAttribute('orientation', options.orientation);
   }
 
   Object.entries(element.dataset).forEach(([key, value]) => {
