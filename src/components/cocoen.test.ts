@@ -5,7 +5,7 @@ import { fixture, html, oneEvent } from '@open-wc/testing';
 import { calculatePointfromEvent } from '../utils/calculate-point-from-event';
 import type { Cocoen } from './cocoen';
 
-jest.mock('../utils/calculate-x-from-event');
+jest.mock('../utils/calculate-point-from-event');
 
 const mockedMouseEvent = document.createEvent('MouseEvent');
 mockedMouseEvent.initMouseEvent(
