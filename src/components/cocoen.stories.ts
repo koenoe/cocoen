@@ -10,6 +10,7 @@ import { styleMap } from 'lit-html/directives/style-map';
 import after from '../../after.jpg';
 // @ts-ignore
 import before from '../../before.jpg';
+import type { Orientation } from '../config';
 
 // This default export determines where your story goes in the story list
 // eslint-disable-next-line import/no-default-export
@@ -30,10 +31,11 @@ export default {
 type Args = {
   start?: number;
   color?: string;
+  orientation?: Orientation;
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const Cocoen = ({ start, color }: Args) => {
+const Cocoen = ({ start, color, orientation }: Args) => {
   const styles = {
     position: 'relative',
     maxWidth: '700px',
@@ -45,6 +47,7 @@ const Cocoen = ({ start, color }: Args) => {
       <cocoen-component
         color=${ifDefined(color || undefined)}
         start=${ifDefined(start || undefined)}
+        orientation=${ifDefined(orientation || undefined)}
       >
         <img src=${before} slot="before" alt="" />
         <img src=${after} slot="after" alt="" />
@@ -64,8 +67,12 @@ export const Custom = Cocoen.bind({});
 Custom.args = {
   start: 75,
   color: '#ff0000',
+  orientation: 'horizontal',
 };
 // @ts-ignore
 Custom.argTypes = {
   color: { control: 'color' },
+  orientation: {
+    control: { type: 'select', options: ['horizontal', 'vertical'] },
+  },
 };

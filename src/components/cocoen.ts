@@ -1,4 +1,4 @@
-import { Direction, componentName } from '../config';
+import { Orientation, componentName } from '../config';
 import { calculateElementHeight } from '../utils/calculate-element-height';
 import { calculateElementWidth } from '../utils/calculate-element-width';
 import { calculateOpenRatio } from '../utils/calculate-open-ratio';
@@ -50,6 +50,11 @@ const css = `
     width: 50%;
   }
 
+  :host([orientation="vertical"]) #before {
+    width: 100%;
+    height: 50%;
+  }
+
   #drag {
     background: var(--color, #fff);
     bottom: 0;
@@ -59,6 +64,15 @@ const css = `
     top: 0;
     width: 2px;
     transform: translate3d(-50%, 0, 0);
+  }
+
+  :host([orientation="vertical"]) #drag {
+    height: 2px;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    cursor: ns-resize;
+    transform: translate3d(0, -50%, 0);
   }
 
   #drag:before {
@@ -72,8 +86,14 @@ const css = `
     transform: translate3d(-50%, -50%, 0);
   }
 
+  :host([orientation="vertical"]) #drag:before {
+    height: 14px;
+    width: 30px;
+  }
+
   ::slotted(img) {
     max-height: 100%;
+    max-width: 100%;
     object-fit: contain;
     pointer-events: none;
   }
@@ -82,10 +102,20 @@ const css = `
     max-width: none;
   }
 
+  :host([orientation="vertical"]) ::slotted(img[slot=before]) {
+    max-height: none;
+    max-width: 100%;
+  }
+
   ::slotted(img[slot=after]) {
     display: block;
     max-width: 100%;
     width: 100%;
+  }
+
+  :host([orientation="vertical"]) ::slotted(img[slot=after]) {
+    max-height: 100%;
+    height: 100%;
   }
 `;
 
@@ -114,7 +144,7 @@ export class Cocoen extends HTMLElement {
 
   private colorValue = '#fff';
 
-  private directionValue: Direction = 'left-to-right';
+  private orientationValue: Orientation = 'horizontal';
 
   private dragElementSizeValue = 0;
 
@@ -248,12 +278,12 @@ export class Cocoen extends HTMLElement {
     this.animateToValue = value;
   }
 
-  get direction(): Direction {
-    return this.directionValue;
+  get orientation(): Orientation {
+    return this.orientationValue;
   }
 
-  set direction(value: Direction) {
-    this.directionValue = value;
+  set orientation(value: Orientation) {
+    this.orientationValue = value;
 
     window.requestAnimationFrame(() => {
       this.updateDimensions();
@@ -262,7 +292,7 @@ export class Cocoen extends HTMLElement {
   }
 
   static get observedAttributes(): Array<string> {
-    return ['start', 'color', 'direction'];
+    return ['start', 'color', 'orientation'];
   }
 
   attributeChangedCallback(
@@ -285,8 +315,8 @@ export class Cocoen extends HTMLElement {
       this.color = String(this.getAttribute('color'));
     }
 
-    if (name === 'direction') {
-      this.direction = this.getAttribute('direction') as Direction;
+    if (name === 'orientation') {
+      this.orientation = this.getAttribute('orientation') as Orientation;
     }
   }
 
@@ -366,18 +396,20 @@ export class Cocoen extends HTMLElement {
   }
 
   updateDimensions(): void {
-    this.elementSize = this.isHorizontal()
-      ? calculateElementWidth(this)
-      : calculateElementHeight(this);
+    this.elementSize =
+      this.orientation === 'horizontal'
+        ? calculateElementWidth(this)
+        : calculateElementHeight(this);
 
     if (this.drag) {
-      this.dragElementSize = this.isHorizontal()
-        ? calculateElementWidth(this.drag)
-        : calculateElementHeight(this.drag);
+      this.dragElementSize =
+        this.orientation === 'horizontal'
+          ? calculateElementWidth(this.drag)
+          : calculateElementHeight(this.drag);
     }
 
     this.querySelectorAll('img').forEach((img) => {
-      if (this.isHorizontal()) {
+      if (this.orientation === 'horizontal') {
         // eslint-disable-next-line no-param-reassign
         img.width = this.elementSize;
       } else {
@@ -398,28 +430,22 @@ export class Cocoen extends HTMLElement {
 
     if (this.animateTo) {
       before.style.transition = 'width height .75s';
-      drag.style.transition = 'left right top bottom .75s';
+      drag.style.transition = 'left top .75s';
     } else {
       before.style.transition = 'none';
       drag.style.transition = 'none';
     }
 
-    if (this.direction === 'left-to-right') {
+    if (this.orientation === 'horizontal') {
+      before.style.height = '100%';
       before.style.width = openRatio;
       drag.style.left = openRatio;
-      drag.style.right = 'auto';
-    } else if (this.direction === 'right-to-left') {
-      before.style.width = openRatio;
-      drag.style.right = openRatio;
-      drag.style.left = 'auto';
-    } else if (this.direction === 'top-to-bottom') {
+      drag.style.top = '0px';
+    } else if (this.orientation === 'vertical') {
+      before.style.width = '100%';
       before.style.height = openRatio;
       drag.style.top = openRatio;
-      drag.style.bottom = 'auto';
-    } else if (this.direction === 'bottom-to-top') {
-      before.style.height = openRatio;
-      drag.style.bottom = openRatio;
-      drag.style.top = 'auto';
+      drag.style.left = '0px';
     }
 
     this.dispatchEvent(
@@ -437,7 +463,7 @@ export class Cocoen extends HTMLElement {
       return;
     }
 
-    this.point = calculatePointfromEvent(event, this, this.direction);
+    this.point = calculatePointfromEvent(event, this, this.orientation);
   }
 
   onDragEnd(): void {
@@ -446,7 +472,7 @@ export class Cocoen extends HTMLElement {
 
   onClick(event: MouseEvent): void {
     this.animateTo = 0;
-    this.point = calculatePointfromEvent(event, this, this.direction);
+    this.point = calculatePointfromEvent(event, this, this.orientation);
   }
 
   onContextMenu(): void {
@@ -485,12 +511,6 @@ export class Cocoen extends HTMLElement {
         isVisible: this.isVisible,
       },
     };
-  }
-
-  isHorizontal(): boolean {
-    return (
-      this.direction === 'left-to-right' || this.direction === 'right-to-left'
-    );
   }
 }
 
