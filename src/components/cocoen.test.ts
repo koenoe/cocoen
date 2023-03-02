@@ -100,7 +100,11 @@ describe('<cocoen-component />', () => {
 
     component.onClick(mockedMouseEvent);
     expect(component.animateTo).toEqual(0);
-    expect(calculatePointfromEvent).toBeCalledWith(mockedMouseEvent, component);
+    expect(calculatePointfromEvent).toBeCalledWith(
+      mockedMouseEvent,
+      component,
+      'horizontal',
+    );
   });
 
   test('should set `isDragging` to `true` when drag starts', async () => {
