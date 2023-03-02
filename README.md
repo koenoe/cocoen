@@ -70,10 +70,35 @@ Cocoen.parse(document.body);
 
 ### Options
 
-| Option  | Type   | Description                                                  |
-| ------- | ------ | ------------------------------------------------------------ |
-| `start` | String | Default: "50". The start position of Cocoen as a percentage. |
-| `color` | String | Default: "#fff". Color of drag control                       |
+Can be passed directly to `Cocoen.create`, like:
+
+```js
+Cocoen.create(document.querySelector('.cocoen'), {
+  color: '#ff0000',
+  orientation: 'vertical',
+  start: '75',
+});
+```
+
+or you can set data attributes in the html:
+
+```html
+<div
+  class="cocoen"
+  data-color="#ff0000"
+  data-orientation="vertical"
+  data-start="75"
+>
+  <img src="img/before.jpg" alt="" />
+  <img src="img/after.jpg" alt="" />
+</div>
+```
+
+| Option        | Type   | Description                                                                     |
+| ------------- | ------ | ------------------------------------------------------------------------------- |
+| `color`       | String | Default: "#fff". Color of drag control                                          |
+| `orientation` | String | Default: "horizontal". Orientation of Cocoen, can be 'horizontal' or 'vertical' |
+| `start`       | String | Default: "50". The start position of Cocoen as a percentage.                    |
 
 ### Events
 
